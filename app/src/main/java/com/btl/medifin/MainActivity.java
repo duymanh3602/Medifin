@@ -1,13 +1,16 @@
 package com.btl.medifin;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.btl.medifin.activity.SignUp;
 import com.btl.medifin.activity.UpdateInfor;
 import com.btl.medifin.fragment.bacsi.BsHomeFragment;
 import com.btl.medifin.fragment.bacsi.BsLichKhamFragment;
@@ -17,8 +20,17 @@ import com.btl.medifin.fragment.nguoidung.NdHistoryFragment;
 import com.btl.medifin.fragment.nguoidung.NdHomeFragment;
 import com.btl.medifin.fragment.nguoidung.NdSettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
+
+    private FirebaseDatabase database;
+    DatabaseReference ref;
+
     private SharedPreferences prefs;
     public static final String AGE = "AGE";
     public static final String BIRTHDAY = "BIRTHDAY";
@@ -35,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        testDbConnect();
         getSupportActionBar().hide();
         mappingView();
         prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
@@ -118,5 +131,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void mappingView() {
         bnv = findViewById(R.id.bottom_nav);
+    }
+
+    private void testDbConnect() {
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference("medicine");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                System.out.println("SUCCESS!");
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println("Fail");
+            }
+        });
     }
 }

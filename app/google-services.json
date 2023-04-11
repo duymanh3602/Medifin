@@ -1,62 +1,34 @@
 {
   "project_info": {
-    "project_number": "278649223209",
-    "project_id": "ui-int3115-1",
-    "storage_bucket": "ui-int3115-1.appspot.com"
+    "project_number": "942115159820",
+    "firebase_url": "https://medifin-8aad1-default-rtdb.firebaseio.com",
+    "project_id": "medifin-8aad1",
+    "storage_bucket": "medifin-8aad1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:278649223209:android:402e936f8b879809488438",
+        "mobilesdk_app_id": "1:942115159820:android:7392dea90ac06a1cb19329",
         "android_client_info": {
           "package_name": "com.btl.medifin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "278649223209-h32615r4lilkg8ald2relntq8mi5cdlu.apps.googleusercontent.com",
+          "client_id": "942115159820-qe935uj6gtmdr1efoe63b7dhaieuujv0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBgdXKPNVG3xMyDBS1CdYHlWqiH9fRzg_I"
+          "current_key": "AIzaSyCG82N9EWdU6oOMihxa0H7HrHobeWZugkU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "278649223209-8tjue16cvv5gbvt0rvko0632lqpn5bgh.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:278649223209:android:e01bfe48b0a9c8d8488438",
-        "android_client_info": {
-          "package_name": "com.example.datlichkham"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "278649223209-h32615r4lilkg8ald2relntq8mi5cdlu.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBgdXKPNVG3xMyDBS1CdYHlWqiH9fRzg_I"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "278649223209-8tjue16cvv5gbvt0rvko0632lqpn5bgh.apps.googleusercontent.com",
+              "client_id": "942115159820-qe935uj6gtmdr1efoe63b7dhaieuujv0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

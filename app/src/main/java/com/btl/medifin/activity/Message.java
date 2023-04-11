@@ -46,7 +46,7 @@ public class Message extends AppCompatActivity {
         senderId = getSharedPreferences("PREFS", MODE_PRIVATE).getString("USERNAME", "");
 
         edTextSend = findViewById(R.id.ed_text_send);
-        rcShowMessage = findViewById(R.id.rcShowMessage);
+        rcShowMessage = findViewById(R.id.rcShowMedicine);
         rcShowMessage.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);

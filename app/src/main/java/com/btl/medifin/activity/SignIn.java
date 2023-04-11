@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.btl.medifin.MainActivity;
 import com.btl.medifin.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,7 +22,6 @@ public class SignIn extends AppCompatActivity {
 
     private SharedPreferences prefs;
     private EditText edUsername, edPass;
-    private FirebaseAuth mAuth;
 
     public static final String AGE = "AGE";
     public static final String BIRTHDAY = "BIRTHDAY";
@@ -85,12 +83,6 @@ public class SignIn extends AppCompatActivity {
             }
             if(checkError) {
                 // for Tester
-                if (userNameInput.equals("tester") && passwordInput.equals("testerPassWord")) {
-                    Intent dangNhapIntent = new Intent(SignIn.this, MainActivity.class);
-                    startActivity(dangNhapIntent);
-                    finish();
-                    return;
-                }
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
                 Query checkUser = ref.orderByChild("userName").equalTo(userNameInput);
                 checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -126,16 +118,4 @@ public class SignIn extends AppCompatActivity {
 
         });
     }
-
-//    private void saveDataUser(String ageFromDB, String birthdayFromDB, String emailFromDB, String fullNameFromDB, String levelFromDB, String phoneFromDB, String userNameFromDB, String passwordFromDB) {
-//        prefs.edit().putString(AGE, ageFromDB).commit();
-//        prefs.edit().putString(BIRTHDAY, birthdayFromDB).commit();
-//        prefs.edit().putString(EMAIL, emailFromDB).commit();
-//        prefs.edit().putString(FULLNAME, fullNameFromDB).commit();
-//        prefs.edit().putString(LEVEL, levelFromDB).commit();
-//        prefs.edit().putString(PHONE, phoneFromDB).commit();
-//        prefs.edit().putString(USERNAME, userNameFromDB).commit();
-//        prefs.edit().putString(PASSWORD, passwordFromDB).commit();
-//    }
-
 }
