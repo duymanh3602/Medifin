@@ -7,18 +7,16 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.btl.medifin.activity.SignUp;
 import com.btl.medifin.activity.UpdateInfor;
-import com.btl.medifin.fragment.bacsi.BsHomeFragment;
-import com.btl.medifin.fragment.bacsi.BsLichKhamFragment;
-import com.btl.medifin.fragment.nguoidung.NdChatFragment;
-import com.btl.medifin.fragment.nguoidung.NdDatLichFragment;
-import com.btl.medifin.fragment.nguoidung.NdHistoryFragment;
-import com.btl.medifin.fragment.nguoidung.NdHomeFragment;
-import com.btl.medifin.fragment.nguoidung.NdSettingFragment;
+import com.btl.medifin.fragment.doctor.BsHomeFragment;
+import com.btl.medifin.fragment.doctor.BsLichKhamFragment;
+import com.btl.medifin.fragment.user.NdDatLichFragment;
+import com.btl.medifin.fragment.user.NdHistoryFragment;
+import com.btl.medifin.fragment.user.NdHomeFragment;
+import com.btl.medifin.fragment.user.NdMedicineFragment;
+import com.btl.medifin.fragment.user.NdSettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     currentFragment = new BsLichKhamFragment();
                     break;
                 case R.id.menu_chat:
-                    currentFragment = new NdChatFragment();
+                    currentFragment = new NdMedicineFragment();
                     break;
                 case R.id.menu_setting:
                     currentFragment = new NdSettingFragment();
@@ -116,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     currentFragment = new NdDatLichFragment();
                     break;
                 case R.id.menu_chat:
-                    currentFragment = new NdChatFragment();
+                    currentFragment = new NdMedicineFragment();
                     break;
                 case R.id.menu_setting:
                     currentFragment = new NdSettingFragment();

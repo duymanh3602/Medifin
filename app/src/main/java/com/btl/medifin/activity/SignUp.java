@@ -76,6 +76,7 @@ public class SignUp extends AppCompatActivity {
                 user.setBirthday("");
                 user.setPhone("");
                 user.setFullName("");
+                user.setSpecialized("Người dùng");
 
                 database = FirebaseDatabase.getInstance();
                 ref = database.getReference("users");

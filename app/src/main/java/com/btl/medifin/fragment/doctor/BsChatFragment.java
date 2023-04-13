@@ -1,4 +1,4 @@
-package com.btl.medifin.fragment.bacsi;
+package com.btl.medifin.fragment.doctor;
 
 import android.os.Bundle;
 
@@ -12,19 +12,20 @@ import com.btl.medifin.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link BsSettingFragment#newInstance} factory method to
+ * Use the {@link BsChatFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BsSettingFragment extends Fragment {
+public class BsChatFragment extends Fragment {
 
 
-    public BsSettingFragment() {
+
+    public BsChatFragment() {
         // Required empty public constructor
     }
 
 
-    public static BsSettingFragment newInstance() {
-        BsSettingFragment fragment = new BsSettingFragment();
+    public static BsChatFragment newInstance() {
+        BsChatFragment fragment = new BsChatFragment();
         return fragment;
     }
 
@@ -37,6 +38,6 @@ public class BsSettingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bs_setting, container, false);
+        return inflater.inflate(R.layout.fragment_bs_chat, container, false);
     }
 }

@@ -1,4 +1,4 @@
-package com.btl.medifin.fragment.nguoidung;
+package com.btl.medifin.fragment.user;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -60,7 +60,7 @@ public class NdChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nd_chat, container, false);
-        rcUser = view.findViewById(R.id.rcUserChatActive);
+        rcUser = view.findViewById(R.id.rcMedicine);
         rcUser.setLayoutManager(new LinearLayoutManager(getContext()));
         usersList = new ArrayList<>();
         myId = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE).getString("USERNAME", "");

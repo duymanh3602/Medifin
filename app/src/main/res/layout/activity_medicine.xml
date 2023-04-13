@@ -26,13 +26,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tvReceiverName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
+                android:text="Tra cứu thuốc"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                android:text="ten nguoi dung" />
+                android:textSize="16sp" />
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

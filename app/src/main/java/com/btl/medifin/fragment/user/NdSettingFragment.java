@@ -1,4 +1,4 @@
-package com.btl.medifin.fragment.nguoidung;
+package com.btl.medifin.fragment.user;
 
 import android.content.Context;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.btl.medifin.fragment.nguoidung;
+package com.btl.medifin.fragment.user;
 
 import android.app.DatePickerDialog;
 import android.content.Context;

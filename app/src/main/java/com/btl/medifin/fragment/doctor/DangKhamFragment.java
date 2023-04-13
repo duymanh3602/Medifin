@@ -1,4 +1,4 @@
-package com.btl.medifin.fragment.bacsi;
+package com.btl.medifin.fragment.doctor;
 
 import android.content.Context;
 import android.os.Bundle;
