@@ -95,9 +95,11 @@ public class SignIn extends AppCompatActivity {
                                 String fullNameFromDB = dataSnapshot.child(userNameInput).child("fullName").getValue(String.class);
                                 String levelFromDB = dataSnapshot.child(userNameInput).child("level").getValue(String.class);
                                 String userNameFromDB = dataSnapshot.child(userNameInput).child("userName").getValue(String.class);
+                                String mail = dataSnapshot.child(userNameInput).child("email").getValue(String.class);
                                 prefs.edit().putString(USERNAME, userNameFromDB).commit();
                                 prefs.edit().putString(FULLNAME, fullNameFromDB).commit();
                                 prefs.edit().putString(LEVEL, levelFromDB).commit();
+                                prefs.edit().putString(EMAIL, mail).commit();
                                 prefs.edit().putBoolean("REMEMBERLOGIN", true).commit();
                                 Intent dangNhapIntent = new Intent(SignIn.this, MainActivity.class);
                                 startActivity(dangNhapIntent);

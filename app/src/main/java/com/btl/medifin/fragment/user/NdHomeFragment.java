@@ -68,7 +68,7 @@ public class NdHomeFragment extends Fragment implements View.OnClickListener{
             case R.id.cv_message_ndHome:
                 bnv.setSelectedItemId(R.id.menu_chat);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new NdChatFragment()).commit();
+                        .replace(R.id.fragment_container, new NdMedicineFragment()).commit();
                 break;
             case R.id.cv_news_ndHome:
                 getActivity().startActivity(new Intent(getContext(), News.class));

@@ -10,7 +10,7 @@
 
 
     <ImageView
-        android:id="@+id/img"
+        android:id="@+id/imgMedicine"
         android:layout_width="49dp"
         android:layout_height="48dp"
         android:src="@drawable/user" />
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="4dp"
-        android:layout_toRightOf="@id/img"
+        android:layout_toRightOf="@id/imgMedicine"
         android:text="Thuốc: Đau đầu"
         android:textColor="@color/black" />
 
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/name"
         android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@id/img"
+        android:layout_toRightOf="@id/imgMedicine"
         android:text="Liều: 3 viên 1 ngày"
         android:textColor="@color/black" />
 
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="4dp"
-        android:layout_below="@id/img"
+        android:layout_below="@id/imgMedicine"
         android:background="#A1A1A1" />
 
 </RelativeLayout>

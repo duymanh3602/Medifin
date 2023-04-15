@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
         String level = prefs.getString(LEVEL, "");
         String checkNameIsBlank = prefs.getString(FULLNAME, "");
-//        String userName = prefs.getString(USERNAME, "");
 
         if(checkNameIsBlank.isEmpty()){
             Toast.makeText(this, "ten trong", Toast.LENGTH_SHORT).show();
@@ -59,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
-//        Bundle b = new Bundle();
-//        b.putString(USERNAME, userName);
         if(level.equals("Bệnh Nhân")){
             addViewUsers();
         } else {

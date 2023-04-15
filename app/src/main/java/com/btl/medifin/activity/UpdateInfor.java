@@ -43,6 +43,9 @@ public class UpdateInfor extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("users").child(getUsername);
         showAllUserData(getUsername);
         updateInfor();
+        findViewById(R.id.btn_Cancel).setOnClickListener(v -> {
+            finish();
+        });
     }
 
     private void showAllUserData(String username) {
@@ -74,7 +77,7 @@ public class UpdateInfor extends AppCompatActivity {
     }
 
     private void updateInfor() {
-        findViewById(R.id.btn_ok_capNhatActivity).setOnClickListener(v -> {
+        findViewById(R.id.btn_update).setOnClickListener(v -> {
             Boolean checkError = true;
             if(tilHoTen.getEditText().getText().toString().trim().isEmpty()){
                 tilHoTen.setError("Tên không được để trống");

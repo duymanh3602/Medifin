@@ -5,18 +5,18 @@ public class Medicine {
     private int id;
     private String name;
     private String description;
-    private int dose; // per day
-    private String imgLink;
+    private String dose; // per day
+    private String img;
 
     public Medicine() {
     }
 
-    public Medicine(int id, String name, String description, int dose, String imgLink) {
+    public Medicine(int id, String name, String description, String dose, String imgLink) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.dose = dose;
-        this.imgLink = imgLink;
+        this.img = imgLink;
     }
 
     public int getId() {
@@ -43,19 +43,19 @@ public class Medicine {
         this.description = description;
     }
 
-    public int getDose() {
+    public String getDose() {
         return dose;
     }
 
-    public void setDose(int dose) {
+    public void setDose(String dose) {
         this.dose = dose;
     }
 
-    public String getImgLink() {
-        return imgLink;
+    public String getImg() {
+        return img;
     }
 
     public void setImgLink(String imgLink) {
-        this.imgLink = imgLink;
+        this.img = imgLink;
     }
 }

@@ -23,7 +23,7 @@ import java.util.List;
 
 
 public class NdSettingFragment extends Fragment {
-    private TextView tvIdTaiKhoan;
+    private TextView tvIdTaiKhoan, userName, userMail;
     private ListView lvSetting;
     List<Setting> mLists;
     private Context context;
@@ -66,6 +66,7 @@ public class NdSettingFragment extends Fragment {
             switch (position){
                 case 7:
                     context.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit().clear().commit();
+
                     context.startActivity(new Intent(context, SignIn.class));
                     getActivity().finish();
                     break;
@@ -127,8 +128,13 @@ public class NdSettingFragment extends Fragment {
 
     private void mapping(View view) {
         tvIdTaiKhoan = view.findViewById(R.id.tv_taiKhoan_setting);
+        userName = view.findViewById(R.id.userName);
+        userMail = view.findViewById(R.id.usermail);
         lvSetting = view.findViewById(R.id.lv_setting);
 
         tvIdTaiKhoan.setText("Tài khoản: "+context.getSharedPreferences("PREFS", Context.MODE_PRIVATE).getString("USERNAME", ""));
+        userName.setText(context.getSharedPreferences("PREFS", Context.MODE_PRIVATE).getString("FULLNAME",""));
+        userMail.setText(context.getSharedPreferences("PREFS", Context.MODE_PRIVATE).getString("EMAIL",""));
+
     }
 }

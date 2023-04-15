@@ -16,6 +16,7 @@ import com.btl.medifin.activity.UpdateInfor;
 import com.btl.medifin.R;
 import com.btl.medifin.fragment.user.NdChatFragment;
 import com.btl.medifin.fragment.user.NdHistoryFragment;
+import com.btl.medifin.fragment.user.NdMedicineFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
@@ -80,7 +81,7 @@ public class BsHomeFragment extends Fragment implements View.OnClickListener{
             case R.id.cv_message_bsHome:
                 bnv.setSelectedItemId(R.id.menu_chat);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new NdChatFragment()).commit();
+                        .replace(R.id.fragment_container, new NdMedicineFragment()).commit();
                 break;
             case R.id.cv_news_bsHome:
                 getActivity().startActivity(new Intent(getContext(), News.class));
