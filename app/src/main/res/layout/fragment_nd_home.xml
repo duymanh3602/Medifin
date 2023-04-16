@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.user.NdHomeFragment">
+
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,17 +17,21 @@
 
         <ImageView
             android:id="@+id/imageView13"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            app:srcCompat="@drawable/heart" />
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            app:srcCompat="@drawable/heart"
+            tools:layout_editor_absoluteX="16dp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/userNameWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="40dp"
             android:text="Xin chào Duy Mạnh !!!"
-            tools:layout_editor_absoluteX="72dp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="100dp"
             tools:layout_editor_absoluteY="18dp" />
 
     </androidx.appcompat.widget.Toolbar>
@@ -47,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/src_assets_images_giadinh8" />
+            android:src="@drawable/booking" />
 
     </androidx.cardview.widget.CardView>
 
@@ -57,11 +62,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:backgroundTint="#D30056"
-        android:text="ĐẶT LỊCH KHÁM"
-        android:textSize="16sp"
         android:padding="15dp"
-        app:cornerRadius="5dp"
+        android:text="ĐẶT LỊCH NGAY !"
+        android:textSize="16sp"
         android:textStyle="bold"
+        app:cornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/header_ndHome" />
@@ -110,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Phiếu khám bệnh"
+                        android:text="Phiếu khám"
                         android:textAlignment="center" />
 
                 </LinearLayout>
@@ -121,9 +126,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:layout_weight="1"
                 android:elevation="8dp"
                 app:cardCornerRadius="8dp"
-                android:layout_weight="1"
                 app:layout_gravity="fill">
 
                 <LinearLayout
@@ -142,12 +147,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Hồ sơ bệnh nhân"
+                        android:text="Hồ sơ "
                         android:textAlignment="center" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
 
 
         </LinearLayout>
@@ -186,7 +190,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Tìm thuốc"
+                        android:text="Tủ thuốc"
                         android:textAlignment="center" />
 
                 </LinearLayout>

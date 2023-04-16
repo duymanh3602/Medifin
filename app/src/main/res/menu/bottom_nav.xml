@@ -2,27 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_home"
-        android:title="Trang chủ"
-        android:icon="@drawable/ic_home"
-        />
+        android:icon="@drawable/home"
+        android:title="Trang chủ" />
     <item
         android:id="@+id/menu_history"
-        android:title="Phiếu khám"
-        android:icon="@drawable/ic_order_history"
-        />
+        android:icon="@drawable/bill"
+        android:title="Phiếu khám" />
     <item
         android:id="@+id/menu_datLich"
-        android:title="Đặt lịch"
-        android:icon="@drawable/ic_calendar"
-        />
+        android:icon="@drawable/calendar"
+        android:title="Đặt lịch" />
     <item
-        android:id="@+id/menu_chat"
-        android:title="Tin nhắn"
-        android:icon="@drawable/ic_chat"
-        />
+        android:id="@+id/menu_medicine"
+        android:icon="@drawable/med"
+        android:title="Tủ thuốc" />
     <item
         android:id="@+id/menu_setting"
-        android:title="Cài đặt"
-        android:icon="@drawable/ic_settings"
-        />
+        android:icon="@drawable/setting"
+        android:title="Cài đặt" />
 </menu>

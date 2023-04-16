@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.menu_datLich:
                     currentFragment = new BsLichKhamFragment();
                     break;
-                case R.id.menu_chat:
+                case R.id.menu_medicine:
                     currentFragment = new NdMedicineFragment();
                     break;
                 case R.id.menu_setting:
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.menu_datLich:
                     currentFragment = new NdDatLichFragment();
                     break;
-                case R.id.menu_chat:
+                case R.id.menu_medicine:
                     currentFragment = new NdMedicineFragment();
                     break;
                 case R.id.menu_setting:
