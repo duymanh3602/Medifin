@@ -1,21 +1,30 @@
 package com.btl.medifin.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.btl.medifin.MainActivity;
 import com.btl.medifin.R;
 import com.btl.medifin.model.PhieuKham;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -23,9 +32,10 @@ import java.util.TimeZone;
 public class Booking extends AppCompatActivity {
     private EditText edNgay, edGio;
     private Button btnTaoPhieu, btnHuy;
-    private DatabaseReference ref;
+    private DatabaseReference ref, data;
     private SharedPreferences prefs;
-    String idBs, idBn, tenBs, tenBn;
+    String idBs, idBn, tenBs, tenBn, docAddress, docInfo;
+    TextView docAdd, docInf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +46,12 @@ public class Booking extends AppCompatActivity {
         edGio = findViewById(R.id.edGio_TaoPhieuKham);
         btnTaoPhieu = findViewById(R.id.btnTaoPhieuKham);
         btnHuy = findViewById(R.id.btnHuyPhieuKham);
+        docAdd = findViewById(R.id.docAddress);
+        docInf = findViewById(R.id.docInf);
 
         idBs = getIntent().getStringExtra("IDBS");
         tenBs = getIntent().getStringExtra("TENBS");
+
 
         TextView tvTenBs = findViewById(R.id.tvTenBs_datLichNd);
         tvTenBs.setText("Bác sĩ: "+tenBs);
@@ -46,6 +59,11 @@ public class Booking extends AppCompatActivity {
         prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
         idBn = prefs.getString("USERNAME", "");
         tenBn = prefs.getString("FULLNAME", "");
+//        docAddress = prefs.getString("ADDRESS", "");
+//        docInfo = prefs.getString("INFO", "");
+
+        getDataBsi(getIntent().getStringExtra("IDBS"));
+
 
         edNgay.setOnClickListener(v -> {
             showDateDialog();
@@ -121,5 +139,21 @@ public class Booking extends AppCompatActivity {
         new DatePickerDialog(this, onDateSetListener, year, month, day).show();
     }
 
+    private void getDataBsi(String idBs) {
+        data = FirebaseDatabase.getInstance().getReference().child("users").child(idBs);
+        data.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                docAddress =  dataSnapshot.child("docAddress").getValue(String.class);
+                docInfo = dataSnapshot.child("docInfo").getValue(String.class);
+                docInf.setText("Thông Tin: " + docInfo);
+                docAdd.setText("Địa Chỉ: " + docAddress);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("DocInfo", "Fail to found this docterID");
+            }
+        });
+    }
 }

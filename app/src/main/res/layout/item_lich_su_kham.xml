@@ -26,7 +26,8 @@
                 android:id="@+id/imageView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_profiles_50" />
+                android:src="@drawable/ic_profiles_50"
+                app:srcCompat="@drawable/payment" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -45,7 +46,7 @@
         android:id="@+id/tv_ten_lichSuKham"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:text="Nguyễn Nam"
         android:textColor="@color/black"
         android:textSize="16sp"

@@ -2,6 +2,9 @@ package com.btl.medifin.model;
 
 public class Doctor {
     String userName, password, email, fullName;
+    String specialized;
+    String add;
+    String chucvu;
 
     public Doctor() {
     }

@@ -6,12 +6,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.doctor.BsHomeFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView13"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            app:srcCompat="@drawable/heart"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:id="@+id/userNameWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="40dp"
+            android:text="Xin chào Duy Mạnh !!!"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="100dp"
+            tools:layout_editor_absoluteY="18dp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/header_bsHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="24dp"
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/src_assets_images_giadinh26" />
+            android:src="@drawable/kham" />
 
     </androidx.cardview.widget.CardView>
 
@@ -32,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:backgroundTint="#D30056"
-        android:text="XEM LỊCH KHÁM"
+        android:text="LỊCH KHÁM"
         android:textSize="16sp"
         android:padding="15dp"
         app:cornerRadius="5dp"
@@ -117,7 +147,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Hồ sơ bác sĩ"
+                        android:text="Hồ sơ"
                         android:textAlignment="center" />
 
                 </LinearLayout>
@@ -198,6 +228,7 @@
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

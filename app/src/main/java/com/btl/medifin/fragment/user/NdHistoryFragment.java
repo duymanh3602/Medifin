@@ -100,6 +100,7 @@ public class NdHistoryFragment extends Fragment {
     }
 
     private void getLichSu() {
+        getHistoryFromDb();
         if(edFirstDate.getText().toString().isEmpty() || edSecondDate.getText().toString().isEmpty()){
             Toast.makeText(getContext(), "Mốc thời gian bị trống!", Toast.LENGTH_SHORT).show();
         } else if(parseDate(edFirstDate.getText().toString().trim()).after(parseDate(edSecondDate.getText().toString().trim()))){

@@ -1,12 +1,12 @@
 package com.btl.medifin.model;
 
 public class Users {
-    private String userName, fullName, password, email, level, age, birthday, phone, description, specialized;
+    private String userName, fullName, password, email, level, age, birthday, phone, description, specialized, docAdd, docInfo;
 
     public Users() {
     }
 
-    public Users(String userName, String fullName, String password, String email, String level, String age, String birthday, String phone, String description, String specialized) {
+    public Users(String userName, String fullName, String password, String email, String level, String age, String birthday, String phone, String description, String specialized, String doctorAdd, String doctorInfo) {
         this.userName = userName;
         this.fullName = fullName;
         this.password = password;
@@ -17,6 +17,8 @@ public class Users {
         this.phone = phone;
         this.description = description;
         this.specialized = specialized;
+        this.docAdd = doctorAdd;
+        this.docInfo = doctorInfo;
     }
 
     public String getUserName() {
@@ -97,5 +99,21 @@ public class Users {
 
     public void setSpecialized(String specialized) {
         this.specialized = specialized;
+    }
+
+    public String getDocAdd() {
+        return docAdd;
+    }
+
+    public void setDoctorAdd(String doctorAdd) {
+        this.docAdd = doctorAdd;
+    }
+
+    public String getDocInfo() {
+        return docInfo;
+    }
+
+    public void setDoctorInfo(String doctorInfo) {
+        this.docInfo = doctorInfo;
     }
 }

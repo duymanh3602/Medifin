@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.btl.medifin.R;
@@ -22,6 +24,8 @@ public class SignUp extends AppCompatActivity {
     private FirebaseDatabase database;
     DatabaseReference ref;
     Button btnDangKi, btnHuyBo;
+    TextView cancel;
+    ImageView back;
     EditText etUserName, etPassword, etRePassword, etEmail;
 
     @Override
@@ -32,9 +36,13 @@ public class SignUp extends AppCompatActivity {
 
         mappingView();
         signUp();
-        btnHuyBo.setOnClickListener(v -> {
+        cancel.setOnClickListener(v -> {
             finish();
         });
+        back.setOnClickListener(v -> {
+            finish();
+        });
+
     }
 
     private void signUp() {
@@ -77,6 +85,8 @@ public class SignUp extends AppCompatActivity {
                 user.setPhone("");
                 user.setFullName("");
                 user.setSpecialized("Người dùng");
+                user.setDoctorAdd("null");
+                user.setDoctorInfo("null");
 
                 database = FirebaseDatabase.getInstance();
                 ref = database.getReference("users");
@@ -102,7 +112,8 @@ public class SignUp extends AppCompatActivity {
 
     private void mappingView() {
         btnDangKi = findViewById(R.id.dangKi_btnDangKi);
-        btnHuyBo = findViewById(R.id.dangKi_btnHuyBo);
+        cancel = findViewById(R.id.btn_Cancel);
+        back = findViewById(R.id.back);
         etUserName = findViewById(R.id.dangKi_edUserName);
         etPassword = findViewById(R.id.dangKi_etPassword);
         etRePassword = findViewById(R.id.dangKi_etRePassword);

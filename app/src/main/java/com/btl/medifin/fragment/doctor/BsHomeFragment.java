@@ -1,5 +1,6 @@
 package com.btl.medifin.fragment.doctor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.btl.medifin.activity.News;
 import com.btl.medifin.activity.UpdateInfor;
@@ -27,6 +29,9 @@ public class BsHomeFragment extends Fragment implements View.OnClickListener{
     private Button btnLichKham;
     private CardView cvProfile, cvHistory, cvMessage, cvNews;
     private BottomNavigationView bnv;
+    private TextView welcomeName;
+    String name;
+
     public BsHomeFragment() {
         // Required empty public constructor
     }
@@ -47,12 +52,16 @@ public class BsHomeFragment extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_bs_home, container, false);
         bnv = getActivity().findViewById(R.id.bottom_nav);
         mapping(view);
+        name = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE).getString("FULLNAME", "");
+        welcomeName.setText("Xin chào " + name + " !!!");
+
         return view;
     }
 
 
 
     private void mapping(View view) {
+        welcomeName = view.findViewById(R.id.userNameWelcome);
         view.findViewById(R.id.btnLichKham_bsHome).setOnClickListener(this);
         view.findViewById(R.id.cvProfile_bsHome).setOnClickListener(this);
         view.findViewById(R.id.cvHistory_bsHome).setOnClickListener(this);
