@@ -144,7 +144,7 @@ public class Booking extends AppCompatActivity {
         data.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                docAddress =  dataSnapshot.child("docAddress").getValue(String.class);
+                docAddress =  dataSnapshot.child("docAdd").getValue(String.class);
                 docInfo = dataSnapshot.child("docInfo").getValue(String.class);
                 docInf.setText("Thông Tin: " + docInfo);
                 docAdd.setText("Địa Chỉ: " + docAddress);

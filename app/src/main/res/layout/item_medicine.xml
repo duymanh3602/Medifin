@@ -13,7 +13,7 @@
         android:id="@+id/imgMedicine"
         android:layout_width="49dp"
         android:layout_height="48dp"
-        android:src="@drawable/user" />
+        app:srcCompat="@drawable/pills" />
 
     <TextView
         android:id="@+id/name"
@@ -32,6 +32,7 @@
         android:layout_below="@+id/name"
         android:layout_marginLeft="16dp"
         android:layout_toRightOf="@id/imgMedicine"
+        android:maxLength="40"
         android:text="Liều: 3 viên 1 ngày"
         android:textColor="@color/black" />
 

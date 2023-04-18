@@ -4,6 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -17,6 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class Medicine extends AppCompatActivity {
@@ -50,11 +57,16 @@ public class Medicine extends AppCompatActivity {
     private void getMedicineInfor(String name) {
         ref = FirebaseDatabase.getInstance().getReference("medicin");
         ref.child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-
                     com.btl.medifin.model.Medicine medicine = dataSnapshot.getValue(com.btl.medifin.model.Medicine.class);
+                    //imageMedicine.setImageURI(Uri.parse("https://res.cloudinary.com/dsgac7fag/image/upload/v1681840651/thuoc_khang_sinh_mun_zwjk0p.jpg"));
+                    //imageMedicine.setImageBitmap(getBitmapFromURL("https://res.cloudinary.com/dsgac7fag/image/upload/v1681840651/thuoc_khang_sinh_mun_zwjk0p.jpg"));
+                    String path = "R.raw." + medicine.getImg();
+                    int resourcesCode = getResources().getIdentifier(medicine.getImg(), "raw", getPackageName());
+                    imageMedicine.setImageResource(resourcesCode);
                     nameMedicine.setText("Tên: " + medicine.getName());
                     medicineDescription.setText("Mô tả: " + medicine.getDescription());
                     medicineDose.setText("Liều: " + medicine.getDose());
@@ -70,11 +82,28 @@ public class Medicine extends AppCompatActivity {
         });
     }
 
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+
+            HttpURLConnection connection = (HttpURLConnection) url
+                    .openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (Exception e) {
+            Log.d("Medicine", e.toString());
+            return null;
+        }
+    }
+
     private void mappingView() {
         nameMedicine = findViewById(R.id.nameMedicine);
         medicineDescription = findViewById(R.id.medicineDescription);
         medicineDose = findViewById(R.id.medicineDose);
         back = findViewById(R.id.medInfoBack);
-        //imageMedicine = findViewById(R.id.imgMedicine);
+        imageMedicine = findViewById(R.id.imgMedicineInfo);
     }
 }

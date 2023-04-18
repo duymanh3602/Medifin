@@ -2,7 +2,7 @@ package com.btl.medifin.model;
 
 public class Medicine {
 
-    private int id;
+    private String mid;
     private String name;
     private String description;
     private String dose; // per day
@@ -11,20 +11,20 @@ public class Medicine {
     public Medicine() {
     }
 
-    public Medicine(int id, String name, String description, String dose, String imgLink) {
-        this.id = id;
+    public Medicine(String id, String name, String description, String dose, String imgLink) {
+        this.mid = id;
         this.name = name;
         this.description = description;
         this.dose = dose;
         this.img = imgLink;
     }
 
-    public int getId() {
-        return id;
+    public String getmId() {
+        return mid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(String id) {
+        this.mid = id;
     }
 
     public String getName() {

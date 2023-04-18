@@ -69,7 +69,7 @@ public class NdHistoryFragment extends Fragment {
         edSecondDate = view.findViewById(R.id.edSecondDate);
         rcHistory = view.findViewById(R.id.rcLichSuKhamNd);
         rcHistory.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        getLichSu(0);
         edFirstDate.setOnClickListener(v -> {
 
             onDateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -78,7 +78,7 @@ public class NdHistoryFragment extends Fragment {
                     month = month+1;
                     String date = dayOfMonth + "/" + month + "/" + year;
                     edFirstDate.setText(date);
-                    getLichSu();
+                    getLichSu(1);
                 }
             };
             chooseDate();
@@ -91,7 +91,7 @@ public class NdHistoryFragment extends Fragment {
                     month = month+1;
                     String date = dayOfMonth + "/" + month + "/" + year;
                     edSecondDate.setText(date);
-                    getLichSu();
+                    getLichSu(1);
                 }
             };
             chooseDate();
@@ -99,14 +99,17 @@ public class NdHistoryFragment extends Fragment {
         return view;
     }
 
-    private void getLichSu() {
-        getHistoryFromDb();
-        if(edFirstDate.getText().toString().isEmpty() || edSecondDate.getText().toString().isEmpty()){
-            Toast.makeText(getContext(), "Mốc thời gian bị trống!", Toast.LENGTH_SHORT).show();
-        } else if(parseDate(edFirstDate.getText().toString().trim()).after(parseDate(edSecondDate.getText().toString().trim()))){
-            Toast.makeText(getContext(), "Thời gian trước phải bé hơn thời gian sau", Toast.LENGTH_SHORT).show();
-        } else {
+    private void getLichSu(int i) {
+        if ( i == 0) {
             getHistoryFromDb();
+        } else {
+            if (edFirstDate.getText().toString().isEmpty() || edSecondDate.getText().toString().isEmpty()) {
+                Toast.makeText(getContext(), "Mốc thời gian bị trống!", Toast.LENGTH_SHORT).show();
+            } else if (parseDate(edFirstDate.getText().toString().trim()).after(parseDate(edSecondDate.getText().toString().trim()))) {
+                Toast.makeText(getContext(), "Thời gian trước phải bé hơn thời gian sau", Toast.LENGTH_SHORT).show();
+            } else {
+                getHistoryFromDb();
+            }
         }
     }
 

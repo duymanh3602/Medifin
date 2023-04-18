@@ -66,7 +66,7 @@ public class NdMedicineFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                searchUser(s.toString());
+                search(s.toString());
             }
 
             @Override
@@ -77,7 +77,7 @@ public class NdMedicineFragment extends Fragment {
         return view;
     }
 
-    private void searchUser(String s) {
+    private void search(String s) {
         Query query = FirebaseDatabase.getInstance().getReference("medicin").orderByChild("name")
                 .startAt(s)
                 .endAt(s + "\uf8ff");
@@ -111,6 +111,7 @@ public class NdMedicineFragment extends Fragment {
                 Medicine medicine = new Medicine();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     medicine = ds.getValue(Medicine.class);
+                    System.out.printf(medicine.toString());
                     medicineList.add(medicine);
                 }
                 MedicineAdapter medicineAdapter = new MedicineAdapter(getContext(), medicineList);
@@ -119,8 +120,11 @@ public class NdMedicineFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
+    }
+
+    private void setMedImage() {
+
     }
 }

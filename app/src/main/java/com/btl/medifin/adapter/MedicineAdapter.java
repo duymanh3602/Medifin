@@ -21,11 +21,12 @@ import com.btl.medifin.model.Medicine;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MedicineViewHolder>{
     private Context context;
-    private List<Medicine> medicineList;
+    private List<Medicine> medicineList = new ArrayList<>();
 
     public MedicineAdapter(Context context, List<Medicine> medicineList) {
         this.context = context;
@@ -48,7 +49,7 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.Medici
         holder.dose.setText("Liều: " + medicineList.get(position).getDose());
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, com.btl.medifin.activity.Medicine.class);
-            intent.putExtra("ID", medicineList.get(position).getName().toString());
+            intent.putExtra("ID", medicineList.get(position).getmId().toString());
             context.startActivity(intent);
         });
     }
