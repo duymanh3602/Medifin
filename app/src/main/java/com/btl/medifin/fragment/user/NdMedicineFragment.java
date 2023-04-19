@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class NdMedicineFragment extends Fragment {
 
@@ -78,9 +79,9 @@ public class NdMedicineFragment extends Fragment {
     }
 
     private void search(String s) {
-        Query query = FirebaseDatabase.getInstance().getReference("medicin").orderByChild("name")
-                .startAt(s)
-                .endAt(s + "\uf8ff");
+        Query query = FirebaseDatabase.getInstance().getReference("medicin").orderByChild("mid")
+                .startAt(s.toLowerCase(Locale.ROOT))
+                .endAt(s.toLowerCase(Locale.ROOT) + "\uf8ff");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

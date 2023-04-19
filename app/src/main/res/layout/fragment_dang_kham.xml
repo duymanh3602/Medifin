@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:text="Chi tiết phiếu khám"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <TextView
@@ -54,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="1342134"
+        android:text="12696969"
         android:textColor="#F44336"
         android:textSize="16dp"
         app:layout_constraintStart_toEndOf="@+id/textView19"
@@ -65,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:text="Nguyễn Thị Nở"
+        android:text="Họ văn Tên"
         android:textColor="#F44336"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/tvMaPhieuKham_dangKham"

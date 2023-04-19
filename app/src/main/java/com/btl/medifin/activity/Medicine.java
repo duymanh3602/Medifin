@@ -67,6 +67,7 @@ public class Medicine extends AppCompatActivity {
                     String path = "R.raw." + medicine.getImg();
                     int resourcesCode = getResources().getIdentifier(medicine.getImg(), "raw", getPackageName());
                     imageMedicine.setImageResource(resourcesCode);
+                    //imageMedicine.setMa
                     nameMedicine.setText("Tên: " + medicine.getName());
                     medicineDescription.setText("Mô tả: " + medicine.getDescription());
                     medicineDose.setText("Liều: " + medicine.getDose());

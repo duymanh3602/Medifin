@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.btl.medifin.R;
 import com.btl.medifin.adapter.DoctorAdapter;
@@ -31,6 +32,7 @@ public class NdDatLichFragment extends Fragment {
     private RecyclerView rcDatLich;
     private List<Users> mUsers;
     private DoctorAdapter datLichAdapter;
+    private ImageView back;
 
     public NdDatLichFragment() {
         // Required empty public constructor
@@ -58,7 +60,9 @@ public class NdDatLichFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nd_dat_lich, container, false);
         rcDatLich = view.findViewById(R.id.rcDatLichKham);
+
         getDataDoctor();
+
 
         return view;
     }
