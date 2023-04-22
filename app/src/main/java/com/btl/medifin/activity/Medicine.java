@@ -64,7 +64,6 @@ public class Medicine extends AppCompatActivity {
                     com.btl.medifin.model.Medicine medicine = dataSnapshot.getValue(com.btl.medifin.model.Medicine.class);
                     //imageMedicine.setImageURI(Uri.parse("https://res.cloudinary.com/dsgac7fag/image/upload/v1681840651/thuoc_khang_sinh_mun_zwjk0p.jpg"));
                     //imageMedicine.setImageBitmap(getBitmapFromURL("https://res.cloudinary.com/dsgac7fag/image/upload/v1681840651/thuoc_khang_sinh_mun_zwjk0p.jpg"));
-                    String path = "R.raw." + medicine.getImg();
                     int resourcesCode = getResources().getIdentifier(medicine.getImg(), "raw", getPackageName());
                     imageMedicine.setImageResource(resourcesCode);
                     //imageMedicine.setMa

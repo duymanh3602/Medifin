@@ -9,7 +9,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 
 import com.btl.medifin.MainActivity;
 import com.btl.medifin.R;
@@ -30,6 +33,8 @@ public class UpdateInfor extends AppCompatActivity {
     private DatabaseReference reference;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
 
+    private ImageView back;
+
     public static final String AGE = "AGE";
     public static final String BIRTHDAY = "BIRTHDAY";
     public static final String EMAIL = "EMAIL";
@@ -43,28 +48,17 @@ public class UpdateInfor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_infor);
-        getSupportActionBar().setTitle("Cập nhật thông tin");
+        getSupportActionBar().hide();
         mappingView();
         prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
         String getUsername = prefs.getString(USERNAME, "");
         reference = FirebaseDatabase.getInstance().getReference("users").child(getUsername);
         showAllUserData(getUsername);
-        tilBirthday.setOnClickListener(v -> {
-
-            onDateSetListener = new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    month = month+1;
-                    String date = dayOfMonth + "/" + month + "/" + year;
-                    tilBirthday.getEditText().setText(date);
-                    calculateAge(date);
-                }
-            };
-            chooseDate();
-
-        });
         updateInfor();
         findViewById(R.id.btn_Cancel).setOnClickListener(v -> {
+            finish();
+        });
+        back.setOnClickListener(v -> {
             finish();
         });
     }
@@ -113,7 +107,7 @@ public class UpdateInfor extends AppCompatActivity {
             }
 
             if(checkError){
-                reference.child("age").setValue(tilAge.getEditText().getText().toString().trim());
+                reference.child("age").setValue(calculateAge(tilBirthday.getEditText().getText().toString().trim()));
                 reference.child("birthday").setValue(tilBirthday.getEditText().getText().toString().trim());
                 reference.child("email").setValue(tilMail.getEditText().getText().toString().trim());
                 reference.child("fullName").setValue(tilHoTen.getEditText().getText().toString().trim());
@@ -132,9 +126,10 @@ public class UpdateInfor extends AppCompatActivity {
         tilBirthday = findViewById(R.id.til_birtday_capNhatActivity);
         tilAge = findViewById(R.id.til_age_capNhatActivity);
         tilPhone = findViewById(R.id.til_phone_capNhatActivity);
+        back = findViewById(R.id.backUpdateInfor);
     }
 
-    private int calculateAge(String birthDay) {
+    private String calculateAge(String birthDay) {
         String y = birthDay.substring(birthDay.length()-4, birthDay.length());
         int year = 0;
         for (int i = 0; i < 4; i++) {
@@ -143,7 +138,7 @@ public class UpdateInfor extends AppCompatActivity {
 
         int age = Calendar.getInstance().get(Calendar.YEAR) - year;
 
-        return age;
+        return Integer.toString(age);
     }
 
     private void chooseDate() {
