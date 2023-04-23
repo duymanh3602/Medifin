@@ -26,14 +26,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BsLichKhamFragment extends Fragment {
+public class DoctorLichKhamFragment extends Fragment {
     private Context context;
     private List<PhieuKham> mList;
     private DatabaseReference ref;
     private String idBs;
     private RecyclerView rcLichKham;
 
-    public BsLichKhamFragment() {
+    public DoctorLichKhamFragment() {
         // Required empty public constructor
     }
 
@@ -43,8 +43,8 @@ public class BsLichKhamFragment extends Fragment {
         this.context = context;
     }
 
-    public static BsLichKhamFragment newInstance() {
-        BsLichKhamFragment fragment = new BsLichKhamFragment();
+    public static DoctorLichKhamFragment newInstance() {
+        DoctorLichKhamFragment fragment = new DoctorLichKhamFragment();
         return fragment;
     }
 
@@ -112,7 +112,7 @@ public class BsLichKhamFragment extends Fragment {
     private void dangKham() {
         Boolean dangKhamBenh = context.getSharedPreferences("BACSI", Context.MODE_PRIVATE).getBoolean("DANGKHAM", false);
         if(dangKhamBenh){
-            getFragmentManager().beginTransaction().add(R.id.fragment_container, new DangKhamFragment()).remove(this).commit();
+            getFragmentManager().beginTransaction().add(R.id.fragment_container, new DoctorDangKhamFragment()).remove(this).commit();
         }
     }
 

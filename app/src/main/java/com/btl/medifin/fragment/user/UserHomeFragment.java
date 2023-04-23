@@ -4,12 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,16 +16,14 @@ import android.widget.TextView;
 import com.btl.medifin.activity.News;
 import com.btl.medifin.activity.UpdateInfor;
 import com.btl.medifin.R;
-import com.btl.medifin.adapter.BannerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class NdHomeFragment extends Fragment implements View.OnClickListener{
+public class UserHomeFragment extends Fragment implements View.OnClickListener{
 
     private TextView welcomeName;
     String name;
@@ -40,12 +35,12 @@ public class NdHomeFragment extends Fragment implements View.OnClickListener{
     LinearLayoutManager layoutManager;
 
 
-    public NdHomeFragment() {
+    public UserHomeFragment() {
         // Required empty public constructor
     }
 
-    public static NdHomeFragment newInstance() {
-        NdHomeFragment fragment = new NdHomeFragment();
+    public static UserHomeFragment newInstance() {
+        UserHomeFragment fragment = new UserHomeFragment();
         return fragment;
     }
 
@@ -87,12 +82,12 @@ public class NdHomeFragment extends Fragment implements View.OnClickListener{
             case R.id.btnDatLich_ndHome:
                 bnv.setSelectedItemId(R.id.menu_datLich);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new NdDatLichFragment()).commit();
+                        .replace(R.id.fragment_container, new UserBookingFragment()).commit();
                 break;
             case R.id.cvHistory_ndHome:
                 bnv.setSelectedItemId(R.id.menu_history);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new NdHistoryFragment()).commit();
+                        .replace(R.id.fragment_container, new UserHistoryFragment()).commit();
                 break;
             case R.id.cvProfile_ndHome:
                 getActivity().startActivity(new Intent(getContext(), UpdateInfor.class));
@@ -100,7 +95,7 @@ public class NdHomeFragment extends Fragment implements View.OnClickListener{
             case R.id.cv_message_ndHome:
                 bnv.setSelectedItemId(R.id.menu_medicine);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new NdMedicineFragment()).commit();
+                        .replace(R.id.fragment_container, new UserMedicineFragment()).commit();
                 break;
             case R.id.cv_news_ndHome:
                 getActivity().startActivity(new Intent(getContext(), News.class));

@@ -1,5 +1,6 @@
 package com.btl.medifin.fragment.user;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,8 +16,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.btl.medifin.R;
-import com.btl.medifin.adapter.MedicineAdapter;
-import com.btl.medifin.model.Medicine;
+import com.btl.medifin.adapter.UserChatAdapter;
+import com.btl.medifin.model.Users;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,21 +27,22 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-public class NdMedicineFragment extends Fragment {
+public class UserChatFragment extends Fragment {
 
-    private RecyclerView rcMedi;
-    private List<Medicine> medicineList;
+    private RecyclerView rcUser;
+    private List<Users> usersList;
+
+    private String myId;
 
     private EditText searchBar;
 
-    public NdMedicineFragment() {
+    public UserChatFragment() {
         // Required empty public constructor
     }
 
-    public static NdChatFragment newInstance() {
-        NdChatFragment fragment = new NdChatFragment();
+    public static UserChatFragment newInstance() {
+        UserChatFragment fragment = new UserChatFragment();
         return fragment;
     }
 
@@ -52,22 +54,23 @@ public class NdMedicineFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_nd_medicine, container, false);
-        rcMedi = view.findViewById(R.id.rcMedicine);
-        rcMedi.setLayoutManager(new LinearLayoutManager(getContext()));
-        medicineList = new ArrayList<>();
-        getMedicineFromDb();
+        View view = inflater.inflate(R.layout.fragment_nd_chat, container, false);
+        rcUser = view.findViewById(R.id.rcMedicine);
+        rcUser.setLayoutManager(new LinearLayoutManager(getContext()));
+        usersList = new ArrayList<>();
+        myId = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE).getString("USERNAME", "");
+        getUserFromDb();
 
         searchBar = view.findViewById(R.id.searchBar);
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                search(s.toString());
+                searchUser(s.toString());
             }
 
             @Override
@@ -78,22 +81,23 @@ public class NdMedicineFragment extends Fragment {
         return view;
     }
 
-    private void search(String s) {
-        Query query = FirebaseDatabase.getInstance().getReference("medicin").orderByChild("mid")
-                .startAt(s.toLowerCase(Locale.ROOT))
-                .endAt(s.toLowerCase(Locale.ROOT) + "\uf8ff");
+    private void searchUser(String s) {
+        Query query = FirebaseDatabase.getInstance().getReference("users").orderByChild("userName")
+                .startAt(s)
+                .endAt(s + "\uf8ff");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                medicineList.clear();
-                Medicine medicine = new Medicine();
+                usersList.clear();
+                Users users = new Users();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    medicine = ds.getValue(Medicine.class);
-                    medicineList.add(medicine);
-
+                    users = ds.getValue(Users.class);
+                    if(!users.getUserName().equalsIgnoreCase(myId)){
+                        usersList.add(users);
+                    }
                 }
-                MedicineAdapter medicineAdapter = new MedicineAdapter(getContext(), medicineList);
-                rcMedi.setAdapter(medicineAdapter);
+                UserChatAdapter userChatAdapter = new UserChatAdapter(getContext(), usersList);
+                rcUser.setAdapter(userChatAdapter);
             }
 
             @Override
@@ -103,29 +107,27 @@ public class NdMedicineFragment extends Fragment {
         });
     }
 
-    private void getMedicineFromDb() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("medicin");
+    private void getUserFromDb() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                medicineList.clear();
-                Medicine medicine = new Medicine();
+                usersList.clear();
+                Users users = new Users();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    medicine = ds.getValue(Medicine.class);
-                    System.out.printf(medicine.toString());
-                    medicineList.add(medicine);
+                    users = ds.getValue(Users.class);
+                    if(!users.getUserName().equalsIgnoreCase(myId)){
+                        usersList.add(users);
+                    }
                 }
-                MedicineAdapter medicineAdapter = new MedicineAdapter(getContext(), medicineList);
-                rcMedi.setAdapter(medicineAdapter);
+                UserChatAdapter userChatAdapter = new UserChatAdapter(getContext(), usersList);
+                rcUser.setAdapter(userChatAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
-    }
-
-    private void setMedImage() {
-
     }
 }

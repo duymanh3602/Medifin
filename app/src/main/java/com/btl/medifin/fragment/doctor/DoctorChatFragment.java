@@ -10,21 +10,17 @@ import android.view.ViewGroup;
 
 import com.btl.medifin.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BsHistoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class BsHistoryFragment extends Fragment {
+public class DoctorChatFragment extends Fragment {
 
 
-    public BsHistoryFragment() {
+
+    public DoctorChatFragment() {
         // Required empty public constructor
     }
 
 
-    public static BsHistoryFragment newInstance() {
-        BsHistoryFragment fragment = new BsHistoryFragment();
+    public static DoctorChatFragment newInstance() {
+        DoctorChatFragment fragment = new DoctorChatFragment();
         return fragment;
     }
 
@@ -37,6 +33,6 @@ public class BsHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bs_history, container, false);
+        return inflater.inflate(R.layout.fragment_bs_chat, container, false);
     }
 }

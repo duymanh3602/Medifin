@@ -10,21 +10,16 @@ import android.view.ViewGroup;
 
 import com.btl.medifin.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BsSettingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class BsSettingFragment extends Fragment {
+public class DoctorSettingFragment extends Fragment {
 
 
-    public BsSettingFragment() {
+    public DoctorSettingFragment() {
         // Required empty public constructor
     }
 
 
-    public static BsSettingFragment newInstance() {
-        BsSettingFragment fragment = new BsSettingFragment();
+    public static DoctorSettingFragment newInstance() {
+        DoctorSettingFragment fragment = new DoctorSettingFragment();
         return fragment;
     }
 

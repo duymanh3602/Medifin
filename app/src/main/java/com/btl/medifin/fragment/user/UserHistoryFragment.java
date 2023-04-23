@@ -36,7 +36,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class NdHistoryFragment extends Fragment {
+public class UserHistoryFragment extends Fragment {
     private EditText edFirstDate, edSecondDate;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
     private RecyclerView rcHistory;
@@ -47,12 +47,12 @@ public class NdHistoryFragment extends Fragment {
 
 
 
-    public NdHistoryFragment() {
+    public UserHistoryFragment() {
         // Required empty public constructor
     }
 
-    public static NdHistoryFragment newInstance() {
-        NdHistoryFragment fragment = new NdHistoryFragment();
+    public static UserHistoryFragment newInstance() {
+        UserHistoryFragment fragment = new UserHistoryFragment();
         return fragment;
     }
 
@@ -129,13 +129,13 @@ public class NdHistoryFragment extends Fragment {
                             if(ds.child("idBn").getValue(String.class).equalsIgnoreCase(idNd) && compareDate(parseDate(ds.child("date").getValue(String.class)))){
                                 PhieuKham obj = ds.getValue(PhieuKham.class);
                                 phieuKhamList.add(obj);
-                                Toast.makeText(getContext(), "found! " + obj.getDate() + " " + obj.getNote(), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getContext(), "found! " + obj.getDate() + " " + obj.getNote(), Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             if(ds.child("idBs").getValue(String.class).equalsIgnoreCase(idNd) && compareDate(parseDate(ds.child("date").getValue(String.class)))){
                                 PhieuKham obj = ds.getValue(PhieuKham.class);
                                 phieuKhamList.add(obj);
-                                Toast.makeText(getContext(), "found! " + obj.getDate() + " " + obj.getNote(), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getContext(), "found! " + obj.getDate() + " " + obj.getNote(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -155,13 +155,14 @@ public class NdHistoryFragment extends Fragment {
     }
 
     private Boolean compareDate(Date myDate){
-        Date beforeDate = parseDate(edFirstDate.getText().toString().trim());
-        Date afterDate = parseDate(edSecondDate.getText().toString().trim());
-
-        if(beforeDate.compareTo(myDate) == 0 || beforeDate.before(myDate) && afterDate.after(myDate) || afterDate.compareTo(myDate) == 0){
-            return true;
-        }
-        else return false;
+//        Date beforeDate = parseDate(edFirstDate.getText().toString().trim());
+//        Date afterDate = parseDate(edSecondDate.getText().toString().trim());
+//
+//        if(beforeDate.compareTo(myDate) == 0 || beforeDate.before(myDate) && afterDate.after(myDate) || afterDate.compareTo(myDate) == 0){
+//            return true;
+//        }
+//        else return false;
+        return true;
     }
 
     private Date parseDate(String date){

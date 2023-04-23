@@ -21,19 +21,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DangKhamFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class DangKhamFragment extends Fragment {
+public class DoctorDangKhamFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private String idPhieuKham;
@@ -44,21 +36,12 @@ public class DangKhamFragment extends Fragment {
 
     private DatabaseReference databaseReference;
 
-    public DangKhamFragment() {
+    public DoctorDangKhamFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DangKhamFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DangKhamFragment newInstance(String param1, String param2) {
-        DangKhamFragment fragment = new DangKhamFragment();
+    public static DoctorDangKhamFragment newInstance(String param1, String param2) {
+        DoctorDangKhamFragment fragment = new DoctorDangKhamFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -95,7 +78,7 @@ public class DangKhamFragment extends Fragment {
             databaseReference.child("note").setValue(chiTiet);
             databaseReference.child("status").setValue("Hoàn thành");
             getContext().getSharedPreferences("BACSI", Context.MODE_PRIVATE).edit().putBoolean("DANGKHAM", false).commit();
-            getFragmentManager().beginTransaction().add(R.id.fragment_container, new BsLichKhamFragment()).remove(this).commit();
+            getFragmentManager().beginTransaction().add(R.id.fragment_container, new DoctorLichKhamFragment()).remove(this).commit();
         });
     }
 

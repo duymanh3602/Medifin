@@ -34,7 +34,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DatLichVie
     public void onBindViewHolder(@NonNull DatLichViewHolder holder, int position) {
             holder.name.setText("Bác sĩ: " + mList.get(position).getFullName());
             holder.specialized.setText("Chuyên khoa: " + mList.get(position).getSpecialized());
-            holder.btnDatLich.setOnClickListener(v -> {
+            holder.itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(v.getContext(), Booking.class);
                 intent.putExtra("IDBS", mList.get(position).getUserName());
                 intent.putExtra("TENBS", mList.get(position).getFullName());
@@ -56,7 +56,6 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DatLichVie
             super(itemView);
             name = itemView.findViewById(R.id.tvNameBs_DatLich);
             specialized = itemView.findViewById(R.id.tvSpecializedBs_DatLich);
-            btnDatLich = itemView.findViewById(R.id.btnDatLichKham_DatLich);
         }
     }
 

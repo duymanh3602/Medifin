@@ -9,25 +9,26 @@
         android:id="@+id/noticeImg"
         android:layout_width="137dp"
         android:layout_height="78dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="14dp"
         android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/discount_4" />
+        app:srcCompat="@raw/discount_4" />
 
     <TextView
         android:id="@+id/titleNotice"
         android:layout_width="253dp"
         android:layout_height="56dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
         android:maxEms="30"
         android:singleLine="false"
         android:text="Ưu đãi tháng 4 - Giảm 50% Phí Khám tại Medifin"
         android:textColor="@color/light_blue_600"
         app:layout_constraintStart_toEndOf="@+id/noticeImg"
-        tools:layout_editor_absoluteY="12dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/dateNotice"

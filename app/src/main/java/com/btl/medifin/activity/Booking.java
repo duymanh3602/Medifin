@@ -90,7 +90,7 @@ public class Booking extends AppCompatActivity {
             checkError = false;
         }
         if(checkError){
-            ref = FirebaseDatabase.getInstance().getReference().child("booked");
+            ref = FirebaseDatabase.getInstance().getReference().child("History");
             PhieuKham phieuKham = new PhieuKham("null", "null", "null", "null", "null", "Đang chờ", "null", "null", "null", "null", 0);
             phieuKham.setId(ref.push().getKey());
             phieuKham.setIdBs(idBs);

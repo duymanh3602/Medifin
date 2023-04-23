@@ -16,28 +16,23 @@ import android.widget.TextView;
 import com.btl.medifin.activity.News;
 import com.btl.medifin.activity.UpdateInfor;
 import com.btl.medifin.R;
-import com.btl.medifin.fragment.user.NdHistoryFragment;
-import com.btl.medifin.fragment.user.NdMedicineFragment;
+import com.btl.medifin.fragment.user.UserHistoryFragment;
+import com.btl.medifin.fragment.user.UserMedicineFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BsHomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class BsHomeFragment extends Fragment implements View.OnClickListener{
+public class DoctorHomeFragment extends Fragment implements View.OnClickListener{
     private Button btnLichKham;
     private CardView cvProfile, cvHistory, cvMessage, cvNews;
     private BottomNavigationView bnv;
     private TextView welcomeName;
     String name;
 
-    public BsHomeFragment() {
+    public DoctorHomeFragment() {
         // Required empty public constructor
     }
 
-    public static BsHomeFragment newInstance() {
-        BsHomeFragment fragment = new BsHomeFragment();
+    public static DoctorHomeFragment newInstance() {
+        DoctorHomeFragment fragment = new DoctorHomeFragment();
         return fragment;
     }
 
@@ -76,12 +71,12 @@ public class BsHomeFragment extends Fragment implements View.OnClickListener{
             case R.id.btnLichKham_bsHome:
                 bnv.setSelectedItemId(R.id.menu_datLich);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new BsLichKhamFragment()).commit();
+                        .replace(R.id.fragment_container, new DoctorLichKhamFragment()).commit();
                 break;
             case R.id.cvHistory_bsHome:
                 bnv.setSelectedItemId(R.id.menu_history);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new NdHistoryFragment()).commit();
+                        .replace(R.id.fragment_container, new UserHistoryFragment()).commit();
                 break;
             case R.id.cvProfile_bsHome:
                 getActivity().startActivity(new Intent(getContext(), UpdateInfor.class));
@@ -89,7 +84,7 @@ public class BsHomeFragment extends Fragment implements View.OnClickListener{
             case R.id.cv_message_bsHome:
                 bnv.setSelectedItemId(R.id.menu_medicine);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new NdMedicineFragment()).commit();
+                        .replace(R.id.fragment_container, new UserMedicineFragment()).commit();
                 break;
             case R.id.cv_news_bsHome:
                 getActivity().startActivity(new Intent(getContext(), News.class));

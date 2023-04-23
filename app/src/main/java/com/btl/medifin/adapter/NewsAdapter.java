@@ -36,8 +36,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NoticeViewHold
     @Override
     public void onBindViewHolder(@NonNull NewsAdapter.NoticeViewHolder holder, int position) {
         //holder.img.set
-        int resourcesCode = News.getInden(news.get(position).getImg());
-        holder.img.setImageResource(resourcesCode);
+        //int resourcesCode = News.getInden(news.get(position).getImg());
+
+        int resCode = context.getResources().getIdentifier(news.get(position).getImg(), "raw", context.getPackageName());
+        holder.img.setImageResource(resCode);
         holder.title.setText(news.get(position).getTitle());
         holder.date.setText(news.get(position).getDate());
     }

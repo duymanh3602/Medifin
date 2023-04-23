@@ -22,14 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class NdSettingFragment extends Fragment {
+public class UserSettingFragment extends Fragment {
     private TextView tvIdTaiKhoan, userName, userMail;
     private ListView lvSetting;
     List<Setting> mLists;
     private Context context;
 
-    public NdSettingFragment() {
-        // Required empty public constructor
+    public UserSettingFragment() {
     }
 
     @Override
@@ -38,8 +37,8 @@ public class NdSettingFragment extends Fragment {
         this.context = context;
     }
 
-    public static NdSettingFragment newInstance() {
-        NdSettingFragment fragment = new NdSettingFragment();
+    public static UserSettingFragment newInstance() {
+        UserSettingFragment fragment = new UserSettingFragment();
         return fragment;
     }
 
@@ -80,49 +79,55 @@ public class NdSettingFragment extends Fragment {
         mLists = new ArrayList<>();
 
         Setting obj = new Setting();
-        obj.setImage(R.drawable.ic_user_setting);
-        obj.setTitle("Tài Khoản");
+        obj.setImage(R.drawable.insurance);
+        obj.setTitle("Quy định sử dụng");
         mLists.add(obj);
 
         Setting obj2 = new Setting();
-        obj2.setImage(R.drawable.ic_heart_setting);
-        obj2.setTitle("Thêm sổ bảo hiểm");
+        obj2.setImage(R.drawable.security);
+        obj2.setTitle("Chính sách bảo mật");
         mLists.add(obj2);
 
         Setting obj3 = new Setting();
-        obj3.setImage(R.drawable.ic_boarding_pass_setting);
+        obj3.setImage(R.drawable.customer);
         obj3.setTitle("Điều khoản dịch vụ");
         mLists.add(obj3);
 
         Setting obj4 = new Setting();
-        obj4.setImage(R.drawable.ic_error_setting);
-        obj4.setTitle("Chính sách bảo mật");
+        obj4.setImage(R.drawable.phone_call);
+        obj4.setTitle("Tổng đài CSKH 19001009");
         mLists.add(obj4);
 
         Setting obj5 = new Setting();
-        obj5.setImage(R.drawable.ic_marker_pen_setting);
-        obj5.setTitle("Quy định sử dụng");
+        obj5.setImage(R.drawable.like);
+        obj5.setTitle("Đánh giá ứng dụng");
         mLists.add(obj5);
 
         Setting obj6 = new Setting();
-        obj6.setImage(R.drawable.ic_ask_question_setting);
-        obj6.setTitle("Các vấn đề thường gặp");
+        obj6.setImage(R.drawable.network);
+        obj6.setTitle("Chia sẻ ứng dụng");
         mLists.add(obj6);
 
         Setting obj9 = new Setting();
-        obj9.setImage(R.drawable.ic_3d_touch_setting);
-        obj9.setTitle("Đổi mật khẩu");
+        obj9.setImage(R.drawable.conversation);
+        obj9.setTitle("Một số câu hỏi thường gặp");
         mLists.add(obj9);
 
         Setting obj7 = new Setting();
-        obj7.setImage(R.drawable.ic_export_setting);
+        obj7.setImage(R.drawable.sign_out);
         obj7.setTitle("Đăng xuất");
         mLists.add(obj7);
 
         Setting obj8 = new Setting();
-        obj8.setImage(R.drawable.ic_merge_git_setting);
-        obj8.setTitle("Phiên bản ứng dụng-v1.1.8");
+        obj8.setImage(R.drawable.languages);
+        obj8.setTitle("Ngôn ngữ");
         mLists.add(obj8);
+
+        Setting obj10 = new Setting();
+        obj10.setImage(R.drawable.merge);
+        obj10.setTitle("Phiên bản v1.6.9");
+        mLists.add(obj10);
+
 
     }
 

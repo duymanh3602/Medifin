@@ -9,20 +9,20 @@
 
     <ImageView
         android:id="@+id/image_setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:src="@drawable/ic_user_setting" />
 
     <TextView
         android:id="@+id/title_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="2dp"
         android:layout_toRightOf="@id/image_setting"
         android:text="Tài khoản"
-        android:layout_marginTop="2dp"
-        android:layout_marginLeft="8dp"
         android:textColor="@color/purple_500"
-        android:textSize="16sp"/>
+        android:textSize="18sp" />
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -30,5 +30,14 @@
         android:background="@color/purple_500"
         android:layout_below="@id/image_setting"
         />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="308dp"
+        android:layout_marginEnd="0dp"
+        app:srcCompat="@drawable/next" />
 
 </RelativeLayout>

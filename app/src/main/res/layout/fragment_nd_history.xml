@@ -1,17 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.user.NdHistoryFragment" >
+    tools:context=".fragment.user.UserHistoryFragment" >
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                android:text="Lịch sử khám"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
+        android:id="@+id/fill"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/purple_500"
         android:orientation="horizontal"
         android:weightSum="2">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,9 +51,9 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Từ"
-                android:paddingRight="8dp"
                 android:layout_centerVertical="true"
+                android:paddingRight="8dp"
+                android:text="Từ"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -33,30 +61,30 @@
                 android:id="@+id/edFirstDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_toRightOf="@id/textView6"
                 android:layout_alignParentRight="true"
-                android:textSize="16sp"
+                android:layout_toRightOf="@id/textView6"
+                android:background="@color/white"
                 android:focusable="false"
-                android:background="@color/white"/>
+                android:padding="5dp"
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:paddingRight="10dp"
-            android:layout_weight="1">
+            android:paddingBottom="10dp">
 
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đến"
-                android:paddingRight="8dp"
                 android:layout_centerVertical="true"
+                android:paddingRight="8dp"
+                android:text="Đến"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -64,19 +92,19 @@
                 android:id="@+id/edSecondDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_toRightOf="@id/textView7"
                 android:layout_alignParentRight="true"
-                android:textSize="16sp"
+                android:layout_toRightOf="@id/textView7"
+                android:background="@color/white"
                 android:focusable="false"
-                android:background="@color/white"/>
+                android:padding="5dp"
+                android:textSize="16sp" />
 
         </RelativeLayout>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcLichSuKhamNd"
-        android:layout_margin="16dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_margin="4dp" />
 </LinearLayout>

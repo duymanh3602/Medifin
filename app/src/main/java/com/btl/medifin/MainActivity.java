@@ -10,13 +10,13 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.btl.medifin.activity.UpdateInfor;
-import com.btl.medifin.fragment.doctor.BsHomeFragment;
-import com.btl.medifin.fragment.doctor.BsLichKhamFragment;
-import com.btl.medifin.fragment.user.NdDatLichFragment;
-import com.btl.medifin.fragment.user.NdHistoryFragment;
-import com.btl.medifin.fragment.user.NdHomeFragment;
-import com.btl.medifin.fragment.user.NdMedicineFragment;
-import com.btl.medifin.fragment.user.NdSettingFragment;
+import com.btl.medifin.fragment.doctor.DoctorHomeFragment;
+import com.btl.medifin.fragment.doctor.DoctorLichKhamFragment;
+import com.btl.medifin.fragment.user.UserBookingFragment;
+import com.btl.medifin.fragment.user.UserHistoryFragment;
+import com.btl.medifin.fragment.user.UserHomeFragment;
+import com.btl.medifin.fragment.user.UserMedicineFragment;
+import com.btl.medifin.fragment.user.UserSettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -67,25 +67,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void addViewDoctors() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new BsHomeFragment()).commit();
+                .replace(R.id.fragment_container, new DoctorHomeFragment()).commit();
 
         bnv.setOnNavigationItemSelectedListener(item -> {
             Fragment currentFragment = null;
             switch (item.getItemId()){
                 case R.id.menu_home:
-                    currentFragment = new BsHomeFragment();
+                    currentFragment = new DoctorHomeFragment();
                     break;
                 case R.id.menu_history:
-                    currentFragment = new NdHistoryFragment();
+                    currentFragment = new UserHistoryFragment();
                     break;
                 case R.id.menu_datLich:
-                    currentFragment = new BsLichKhamFragment();
+                    currentFragment = new DoctorLichKhamFragment();
                     break;
                 case R.id.menu_medicine:
-                    currentFragment = new NdMedicineFragment();
+                    currentFragment = new UserMedicineFragment();
                     break;
                 case R.id.menu_setting:
-                    currentFragment = new NdSettingFragment();
+                    currentFragment = new UserSettingFragment();
                     break;
             }
             getSupportFragmentManager().beginTransaction()
@@ -96,25 +96,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void addViewUsers() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new NdHomeFragment()).commit();
+                .replace(R.id.fragment_container, new UserHomeFragment()).commit();
 
         bnv.setOnNavigationItemSelectedListener(item -> {
             Fragment currentFragment = null;
             switch (item.getItemId()){
                 case R.id.menu_home:
-                    currentFragment = new NdHomeFragment();
+                    currentFragment = new UserHomeFragment();
                     break;
                 case R.id.menu_history:
-                    currentFragment = new NdHistoryFragment();
+                    currentFragment = new UserHistoryFragment();
                     break;
                 case R.id.menu_datLich:
-                    currentFragment = new NdDatLichFragment();
+                    currentFragment = new UserBookingFragment();
                     break;
                 case R.id.menu_medicine:
-                    currentFragment = new NdMedicineFragment();
+                    currentFragment = new UserMedicineFragment();
                     break;
                 case R.id.menu_setting:
-                    currentFragment = new NdSettingFragment();
+                    currentFragment = new UserSettingFragment();
                     break;
             }
 

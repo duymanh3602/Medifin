@@ -26,7 +26,6 @@
                 android:id="@+id/imageView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_profiles_50"
                 app:srcCompat="@drawable/payment" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

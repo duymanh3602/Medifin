@@ -8,10 +8,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.EditText;
 
 import com.btl.medifin.R;
 import com.btl.medifin.adapter.DoctorAdapter;
@@ -20,22 +22,22 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class NdDatLichFragment extends Fragment {
+public class UserBookingFragment extends Fragment {
     private DatabaseReference ref;
     private Context mContext;
     private RecyclerView rcDatLich;
     private List<Users> mUsers;
     private DoctorAdapter datLichAdapter;
-    private ImageView back;
+    private EditText searchDoctor;
 
-    public NdDatLichFragment() {
-        // Required empty public constructor
+    public UserBookingFragment() {
     }
 
     @Override
@@ -44,8 +46,8 @@ public class NdDatLichFragment extends Fragment {
         mContext = context;
     }
 
-    public static NdDatLichFragment newInstance() {
-        NdDatLichFragment fragment = new NdDatLichFragment();
+    public static UserBookingFragment newInstance() {
+        UserBookingFragment fragment = new UserBookingFragment();
 
         return fragment;
     }
@@ -62,9 +64,54 @@ public class NdDatLichFragment extends Fragment {
         rcDatLich = view.findViewById(R.id.rcDatLichKham);
 
         getDataDoctor();
+        searchDoctor = view.findViewById(R.id.searchDoctor);
+        searchDoctor.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchDoctor(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         return view;
+    }
+
+    private void searchDoctor(String s) {
+        Query query = FirebaseDatabase.getInstance().getReference("users").orderByChild("fullName")
+                .startAt(s)
+                .endAt(s + "\uf8ff");
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mUsers.clear();
+                Users doc = new Users();
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    doc = ds.getValue(Users.class);
+                    if (doc.getLevel().equals("Bác Sĩ")) {
+                        mUsers.add(doc);
+                    }
+
+                }
+                LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                rcDatLich.setLayoutManager(layoutManager);
+                rcDatLich.setAdapter(datLichAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void getDataDoctor() {

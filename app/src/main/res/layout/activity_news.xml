@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="30dp"
-                android:text="Thông báo hệ thống"
+                android:text="Danh sách tin tức"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />

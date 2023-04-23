@@ -1,6 +1,5 @@
 package com.btl.medifin.fragment.user;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,8 +15,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.btl.medifin.R;
-import com.btl.medifin.adapter.UserChatAdapter;
-import com.btl.medifin.model.Users;
+import com.btl.medifin.adapter.MedicineAdapter;
+import com.btl.medifin.model.Medicine;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,27 +26,20 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link NdChatFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class NdChatFragment extends Fragment {
+public class UserMedicineFragment extends Fragment {
 
-    private RecyclerView rcUser;
-    private List<Users> usersList;
-
-    private String myId;
+    private RecyclerView rcMedi;
+    private List<Medicine> medicineList;
 
     private EditText searchBar;
 
-    public NdChatFragment() {
-        // Required empty public constructor
+    public UserMedicineFragment() {
     }
 
-    public static NdChatFragment newInstance() {
-        NdChatFragment fragment = new NdChatFragment();
+    public static UserChatFragment newInstance() {
+        UserChatFragment fragment = new UserChatFragment();
         return fragment;
     }
 
@@ -59,23 +51,22 @@ public class NdChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_nd_chat, container, false);
-        rcUser = view.findViewById(R.id.rcMedicine);
-        rcUser.setLayoutManager(new LinearLayoutManager(getContext()));
-        usersList = new ArrayList<>();
-        myId = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE).getString("USERNAME", "");
-        getUserFromDb();
+        View view = inflater.inflate(R.layout.fragment_nd_medicine, container, false);
+        rcMedi = view.findViewById(R.id.rcMedicine);
+        rcMedi.setLayoutManager(new LinearLayoutManager(getContext()));
+        medicineList = new ArrayList<>();
+        getMedicineFromDb();
 
         searchBar = view.findViewById(R.id.searchBar);
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                searchUser(s.toString());
+                search(s.toString());
             }
 
             @Override
@@ -86,23 +77,22 @@ public class NdChatFragment extends Fragment {
         return view;
     }
 
-    private void searchUser(String s) {
-        Query query = FirebaseDatabase.getInstance().getReference("users").orderByChild("userName")
-                .startAt(s)
-                .endAt(s + "\uf8ff");
+    private void search(String s) {
+        Query query = FirebaseDatabase.getInstance().getReference("medicin").orderByChild("mid")
+                .startAt(s.toLowerCase(Locale.ROOT))
+                .endAt(s.toLowerCase(Locale.ROOT) + "\uf8ff");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                usersList.clear();
-                Users users = new Users();
+                medicineList.clear();
+                Medicine medicine = new Medicine();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    users = ds.getValue(Users.class);
-                    if(!users.getUserName().equalsIgnoreCase(myId)){
-                        usersList.add(users);
-                    }
+                    medicine = ds.getValue(Medicine.class);
+                    medicineList.add(medicine);
+
                 }
-                UserChatAdapter userChatAdapter = new UserChatAdapter(getContext(), usersList);
-                rcUser.setAdapter(userChatAdapter);
+                MedicineAdapter medicineAdapter = new MedicineAdapter(getContext(), medicineList);
+                rcMedi.setAdapter(medicineAdapter);
             }
 
             @Override
@@ -112,27 +102,29 @@ public class NdChatFragment extends Fragment {
         });
     }
 
-    private void getUserFromDb() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+    private void getMedicineFromDb() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("medicin");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                usersList.clear();
-                Users users = new Users();
+                medicineList.clear();
+                Medicine medicine = new Medicine();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    users = ds.getValue(Users.class);
-                    if(!users.getUserName().equalsIgnoreCase(myId)){
-                        usersList.add(users);
-                    }
+                    medicine = ds.getValue(Medicine.class);
+                    System.out.printf(medicine.toString());
+                    medicineList.add(medicine);
                 }
-                UserChatAdapter userChatAdapter = new UserChatAdapter(getContext(), usersList);
-                rcUser.setAdapter(userChatAdapter);
+                MedicineAdapter medicineAdapter = new MedicineAdapter(getContext(), medicineList);
+                rcMedi.setAdapter(medicineAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
+    }
+
+    private void setMedImage() {
+
     }
 }
