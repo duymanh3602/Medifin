@@ -39,7 +39,8 @@ public class News extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-        ref = FirebaseDatabase.getInstance().getReference("notice");
+        recyclerView = findViewById(R.id.listNews);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getSupportActionBar().hide();
         mappingView();
         getNotice();
@@ -50,7 +51,7 @@ public class News extends AppCompatActivity {
     }
 
     private void getNotice() {
-
+        ref = FirebaseDatabase.getInstance().getReference("notice");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -76,9 +77,9 @@ public class News extends AppCompatActivity {
         imgNotice = findViewById(R.id.noticeImg);
         title = findViewById(R.id.titleNotice);
         date = findViewById(R.id.dateNotice);
-        recyclerView = findViewById(R.id.listNews);
+
         back = findViewById(R.id.backNews);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     public int getInden(String name) {

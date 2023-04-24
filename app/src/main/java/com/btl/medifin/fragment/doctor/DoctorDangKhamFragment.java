@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.btl.medifin.R;
-import com.btl.medifin.model.PhieuKham;
+import com.btl.medifin.model.MedBill;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -90,7 +90,7 @@ public class DoctorDangKhamFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     if(ds.getKey().equalsIgnoreCase(idPhieuKham)){
-                        PhieuKham obj = ds.getValue(PhieuKham.class);
+                        MedBill obj = ds.getValue(MedBill.class);
                         tvTenBn.setText(obj.getTenBn());
                         tvMaPhieuKham.setText(obj.getId());
                     }

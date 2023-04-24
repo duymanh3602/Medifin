@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.btl.medifin.R;
 import com.btl.medifin.adapter.HistoryAdapter;
-import com.btl.medifin.model.PhieuKham;
+import com.btl.medifin.model.MedBill;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,7 +40,7 @@ public class UserHistoryFragment extends Fragment {
     private EditText edFirstDate, edSecondDate;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
     private RecyclerView rcHistory;
-    private List<PhieuKham> phieuKhamList;
+    private List<MedBill> medBillList;
 
     public static final String formatTime = "HH:mm";
     public static final String formatDate = "dd/MM/yyyy";
@@ -122,24 +122,24 @@ public class UserHistoryFragment extends Fragment {
                 try {
                     String idNd = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE).getString("USERNAME", "none");
                     String level = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE).getString("LEVEL", "none");
-                    phieuKhamList = new ArrayList<>();
+                    medBillList = new ArrayList<>();
                     for(DataSnapshot ds: dataSnapshot.getChildren()){
 //                    && ds.child("status").getValue(String.class).equalsIgnoreCase("Hoàn thành")
                         if(level.equalsIgnoreCase("Bệnh Nhân")){
                             if(ds.child("idBn").getValue(String.class).equalsIgnoreCase(idNd) && compareDate(parseDate(ds.child("date").getValue(String.class)))){
-                                PhieuKham obj = ds.getValue(PhieuKham.class);
-                                phieuKhamList.add(obj);
+                                MedBill obj = ds.getValue(MedBill.class);
+                                medBillList.add(obj);
                                 //Toast.makeText(getContext(), "found! " + obj.getDate() + " " + obj.getNote(), Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             if(ds.child("idBs").getValue(String.class).equalsIgnoreCase(idNd) && compareDate(parseDate(ds.child("date").getValue(String.class)))){
-                                PhieuKham obj = ds.getValue(PhieuKham.class);
-                                phieuKhamList.add(obj);
+                                MedBill obj = ds.getValue(MedBill.class);
+                                medBillList.add(obj);
                                 //Toast.makeText(getContext(), "found! " + obj.getDate() + " " + obj.getNote(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
-                    HistoryAdapter historyAdapter = new HistoryAdapter(getContext(), phieuKhamList);
+                    HistoryAdapter historyAdapter = new HistoryAdapter(getContext(), medBillList);
                     rcHistory.setAdapter(historyAdapter);
                 } catch (NullPointerException e){
                     Log.e("===//", ""+e);

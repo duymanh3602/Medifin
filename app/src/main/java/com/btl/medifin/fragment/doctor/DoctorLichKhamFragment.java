@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 
 import com.btl.medifin.R;
 import com.btl.medifin.adapter.ScheduleAdapter;
-import com.btl.medifin.model.PhieuKham;
+import com.btl.medifin.model.MedBill;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +28,7 @@ import java.util.List;
 
 public class DoctorLichKhamFragment extends Fragment {
     private Context context;
-    private List<PhieuKham> mList;
+    private List<MedBill> mList;
     private DatabaseReference ref;
     private String idBs;
     private RecyclerView rcLichKham;
@@ -73,7 +73,7 @@ public class DoctorLichKhamFragment extends Fragment {
                 mList.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     if(ds.child("idBs").getValue(String.class).equalsIgnoreCase(idBs) && ds.child("status").getValue(String.class).equalsIgnoreCase("đang chờ")){
-                        PhieuKham obj = ds.getValue(PhieuKham.class);
+                        MedBill obj = ds.getValue(MedBill.class);
                         mList.add(obj);
                     }
                 }
@@ -100,7 +100,7 @@ public class DoctorLichKhamFragment extends Fragment {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            PhieuKham obj = mList.get(Integer.valueOf(String.valueOf(viewHolder.itemView.getTag())));
+            MedBill obj = mList.get(Integer.valueOf(String.valueOf(viewHolder.itemView.getTag())));
             SharedPreferences pref = context.getSharedPreferences("BACSI", Context.MODE_PRIVATE);
             ref.child(obj.getId()).child("status").setValue("Đang khám");
             pref.edit().putString("IDPK", obj.getId()).commit();

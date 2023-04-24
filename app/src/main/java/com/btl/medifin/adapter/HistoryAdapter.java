@@ -12,17 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.btl.medifin.activity.Bill;
 import com.btl.medifin.R;
-import com.btl.medifin.model.PhieuKham;
+import com.btl.medifin.model.MedBill;
 
 import java.util.List;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.LichSuViewHolder>{
     private Context context;
-    private List<PhieuKham> phieuKhamList;
+    private List<MedBill> medBillList;
 
-    public HistoryAdapter(Context context, List<PhieuKham> phieuKhamList) {
+    public HistoryAdapter(Context context, List<MedBill> medBillList) {
         this.context = context;
-        this.phieuKhamList = phieuKhamList;
+        this.medBillList = medBillList;
     }
 
     @NonNull
@@ -34,7 +34,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.LichSuVi
 
     @Override
     public void onBindViewHolder(@NonNull LichSuViewHolder holder, int position) {
-        PhieuKham obj = phieuKhamList.get(position);
+        MedBill obj = medBillList.get(position);
         holder.tvTen.setText(obj.getTenBs());
         holder.tvTime.setText(obj.getDate() + " lúc " + obj.getTime());
         holder.tvStatus.setText(obj.getStatus());
@@ -57,7 +57,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.LichSuVi
 
     @Override
     public int getItemCount() {
-        return phieuKhamList.size();
+        return medBillList.size();
     }
 
     public static class LichSuViewHolder extends RecyclerView.ViewHolder {

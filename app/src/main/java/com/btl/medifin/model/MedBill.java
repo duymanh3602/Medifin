@@ -1,6 +1,6 @@
 package com.btl.medifin.model;
 
-public class PhieuKham {
+public class MedBill {
     private String id;
     private String idBs, idBn;
     private String tenBs, tenBn;
@@ -11,10 +11,10 @@ public class PhieuKham {
     private String time;
     private int rate;
 
-    public PhieuKham() {
+    public MedBill() {
     }
 
-    public PhieuKham(String id, String idBs, String idBn, String tenBs, String tenBn, String status, String note, String date, String time, String benh, int rate) {
+    public MedBill(String id, String idBs, String idBn, String tenBs, String tenBn, String status, String note, String date, String time, String benh, int rate) {
         this.id = id;
         this.idBs = idBs;
         this.idBn = idBn;

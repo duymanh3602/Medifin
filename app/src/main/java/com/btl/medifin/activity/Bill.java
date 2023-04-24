@@ -9,7 +9,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.btl.medifin.R;
-import com.btl.medifin.model.PhieuKham;
+import com.btl.medifin.model.MedBill;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,7 +42,7 @@ public class Bill extends AppCompatActivity {
         databaseReference.child("History").child(idPk).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                PhieuKham obj = dataSnapshot.getValue(PhieuKham.class);
+                MedBill obj = dataSnapshot.getValue(MedBill.class);
                 setDataFromDb(obj);
             }
 
@@ -53,7 +53,7 @@ public class Bill extends AppCompatActivity {
         });
     }
 
-    private void setDataFromDb(PhieuKham obj) {
+    private void setDataFromDb(MedBill obj) {
         tvId.setText("Mã phiếu: " + obj.getId());
         tvTenBs.setText(obj.getTenBs());
         tvTenBn.setText(obj.getTenBn());

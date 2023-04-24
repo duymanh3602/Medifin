@@ -10,15 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.btl.medifin.R;
-import com.btl.medifin.model.PhieuKham;
+import com.btl.medifin.model.MedBill;
 
 import java.util.List;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.LichKhamViewHolder>{
-    private List<PhieuKham> mLists;
+    private List<MedBill> mLists;
     private Context context;
 
-    public ScheduleAdapter(Context context, List<PhieuKham> mLists) {
+    public ScheduleAdapter(Context context, List<MedBill> mLists) {
         this.mLists = mLists;
         this.context = context;
     }

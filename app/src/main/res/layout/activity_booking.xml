@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Booking"
-    android:background="@drawable/src_assets_images_bg">
+    tools:context=".activity.Booking">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -43,16 +42,16 @@
             android:id="@+id/btnTaoPhieuKham"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_margin="16dp"
+            android:layout_weight="1"
             android:text="Tạo phiếu" />
 
         <Button
             android:id="@+id/btnHuyPhieuKham"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_margin="16dp"
+            android:layout_weight="1"
             android:text="Hủy" />
     </LinearLayout>
 
@@ -79,7 +78,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/innerRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Đánh giá: 4.0/5.0"
@@ -98,12 +97,13 @@
 
     <EditText
         android:id="@+id/edNgay_TaoPhieuKham"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:focusable="false"
         android:hint="10/10/2019"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView11"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -111,44 +111,56 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="24dp"
         android:text="Thời Gian:"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@+id/edNgay_TaoPhieuKham"
-        app:layout_constraintTop_toBottomOf="@+id/edNgay_TaoPhieuKham" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <EditText
         android:id="@+id/edGio_TaoPhieuKham"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:focusable="false"
         android:hint="16:00"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
-    <TextView
-        android:id="@+id/docAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="Địa chỉ:"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/edGio_TaoPhieuKham"
-        tools:layout_editor_absoluteX="20dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="412dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edGio_TaoPhieuKham">
 
-    <TextView
-        android:id="@+id/docInf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Thông tin:"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/docAddress"
-        tools:layout_editor_absoluteX="20dp" />
+        <TextView
+            android:id="@+id/docAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:text="Địa chỉ:"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/docInf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:text="Thông tin:"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

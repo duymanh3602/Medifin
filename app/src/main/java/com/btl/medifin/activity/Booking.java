@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,28 +13,30 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import com.btl.medifin.MainActivity;
 import com.btl.medifin.R;
-import com.btl.medifin.model.PhieuKham;
+import com.btl.medifin.model.MedBill;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.spec.ECField;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 public class Booking extends AppCompatActivity {
+
+    private List<MedBill> medBills = new ArrayList<>();
     private EditText edNgay, edGio;
     private Button btnTaoPhieu, btnHuy;
     private DatabaseReference ref, data;
     private SharedPreferences prefs;
     String idBs, idBn, tenBs, tenBn, docAddress, docInfo;
-    TextView docAdd, docInf;
+    TextView docAdd, docInf, rate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class Booking extends AppCompatActivity {
         btnHuy = findViewById(R.id.btnHuyPhieuKham);
         docAdd = findViewById(R.id.docAddress);
         docInf = findViewById(R.id.docInf);
+        rate = findViewById(R.id.innerRating);
 
         idBs = getIntent().getStringExtra("IDBS");
         tenBs = getIntent().getStringExtra("TENBS");
@@ -63,6 +65,7 @@ public class Booking extends AppCompatActivity {
 //        docInfo = prefs.getString("INFO", "");
 
         getDataBsi(getIntent().getStringExtra("IDBS"));
+        getRateBsi(getIntent().getStringExtra("IDBS"));
 
 
         edNgay.setOnClickListener(v -> {
@@ -91,15 +94,15 @@ public class Booking extends AppCompatActivity {
         }
         if(checkError){
             ref = FirebaseDatabase.getInstance().getReference().child("History");
-            PhieuKham phieuKham = new PhieuKham("null", "null", "null", "null", "null", "Đang chờ", "null", "null", "null", "null", 0);
-            phieuKham.setId(ref.push().getKey());
-            phieuKham.setIdBs(idBs);
-            phieuKham.setTenBs(tenBs);
-            phieuKham.setIdBn(idBn);
-            phieuKham.setTenBn(tenBn);
-            phieuKham.setDate(edNgay.getText().toString().trim());
-            phieuKham.setTime(edGio.getText().toString().trim());
-            ref.child(phieuKham.getId()).setValue(phieuKham);
+            MedBill medBill = new MedBill("null", "null", "null", "null", "null", "Đang chờ", "null", "null", "null", "null", 0);
+            medBill.setId(ref.push().getKey());
+            medBill.setIdBs(idBs);
+            medBill.setTenBs(tenBs);
+            medBill.setIdBn(idBn);
+            medBill.setTenBn(tenBn);
+            medBill.setDate(edNgay.getText().toString().trim());
+            medBill.setTime(edGio.getText().toString().trim());
+            ref.child(medBill.getId()).setValue(medBill);
             finish();
         }
     }
@@ -155,5 +158,39 @@ public class Booking extends AppCompatActivity {
                 Log.d("DocInfo", "Fail to found this docterID");
             }
         });
+    }
+
+    private void getRateBsi(String idBs) {
+        data = FirebaseDatabase.getInstance().getReference().child("History");
+        data.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                MedBill medBill = new MedBill();
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    medBill = ds.getValue(MedBill.class);
+                    if (medBill.getIdBs().equalsIgnoreCase(idBs)) {
+                        if (medBill.getStatus().equals("Hoàn thành")) {
+                            medBills.add(medBill);
+                        }
+                    }
+                }
+                //calRate(medBills);
+                rate.setText("Đánh giá: " + calRate(medBills) + "/5.0 sao");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private double calRate(List<MedBill> medBills) {
+        double rate = 0;
+        for (int i = 0; i < medBills.size(); i++) {
+            rate += medBills.get(i).getRate();
+        }
+
+        return rate/(double)(medBills.size());
     }
 }
