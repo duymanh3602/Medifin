@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -38,19 +39,21 @@ public class News extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_news);
+        mappingView();
         recyclerView = findViewById(R.id.listNews);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        getSupportActionBar().hide();
-        mappingView();
-        getNotice();
+
+
+        getNotice(this);
 
         back.setOnClickListener( v-> {
             finish();
         });
     }
 
-    private void getNotice() {
+    private void getNotice(Context context) {
         ref = FirebaseDatabase.getInstance().getReference("notice");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -60,8 +63,10 @@ public class News extends AppCompatActivity {
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     notification = ds.getValue(Notification.class);
                     notifications.add(notification);
-                    System.out.println(notifications.toString());
+                    //System.out.println(notifications.toString());
                 }
+                NewsAdapter newsAdapter = new NewsAdapter( context,notifications);
+                recyclerView.setAdapter(newsAdapter);
             }
 
             @Override
@@ -69,8 +74,7 @@ public class News extends AppCompatActivity {
                 Log.d("News", "Cannot connect to Database");
             }
         });
-        NewsAdapter newsAdapter = new NewsAdapter( this,notifications);
-        recyclerView.setAdapter(newsAdapter);
+
     }
 
     private void mappingView() {

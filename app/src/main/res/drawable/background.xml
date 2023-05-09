@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<bitmap
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/top_right_logo"
-    android:gravity="center"
-    android:scaleType="fitXY"                         />
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid android:color="#80D0F4"/>
+    <corners android:bottomRightRadius="40dp" android:bottomLeftRadius="40dp"
+        android:topLeftRadius="2dp" android:topRightRadius="0dp"/>
+</shape>

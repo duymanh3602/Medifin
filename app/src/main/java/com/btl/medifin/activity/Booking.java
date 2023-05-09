@@ -6,16 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.btl.medifin.R;
 import com.btl.medifin.model.MedBill;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,11 +32,15 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-public class Booking extends AppCompatActivity {
+public class Booking extends AppCompatActivity{
 
     private List<MedBill> medBills = new ArrayList<>();
+    private List<MedBill> duplicate = new ArrayList<>();
     private EditText edNgay, edGio;
-    private Button btnTaoPhieu, btnHuy;
+    //private Button btnTaoPhieu, btnHuy;
+    private TimePickerDialog timePickerDialog;
+    private TextView btnHuy;
+    private MaterialButton btnTaoPhieu;
     private DatabaseReference ref, data;
     private SharedPreferences prefs;
     String idBs, idBn, tenBs, tenBn, docAddress, docInfo;
@@ -107,6 +115,24 @@ public class Booking extends AppCompatActivity {
         }
     }
 
+    private void setTimePickerInterval(TimePicker timePicker) {
+        int TIME_PICKER_INTERVAL = 15;
+        try {
+
+            NumberPicker minutePicker = (NumberPicker) timePicker.findViewById(Resources.getSystem().getIdentifier(
+                    "minute", "id", "android"));
+            minutePicker.setMinValue(0);
+            minutePicker.setMaxValue((60 / TIME_PICKER_INTERVAL) - 1);
+            List<String> displayedValues = new ArrayList<String>();
+            for (int i = 0; i < 60; i += TIME_PICKER_INTERVAL) {
+                displayedValues.add(String.format("%02d", i));
+            }
+            minutePicker.setDisplayedValues(displayedValues.toArray(new String[0]));
+        } catch (Exception e) {
+            Log.e("TAG", "Exception: " + e);
+        }
+    }
+
     private void showTimeDialog() {
         Calendar cal = Calendar.getInstance();
         cal.setTimeZone(TimeZone.getTimeZone("GMT+7"));
@@ -120,8 +146,9 @@ public class Booking extends AppCompatActivity {
                 edGio.setText(time);
             }
         };
+        TimePickerDialog tpd = new TimePickerDialog(this, onTimeSetListener, hour, minute, true);
 
-        new TimePickerDialog(this, onTimeSetListener, hour, minute, true).show();
+        tpd.show();
     }
 
     private void showDateDialog() {
@@ -166,9 +193,10 @@ public class Booking extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 MedBill medBill = new MedBill();
+                medBills.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     medBill = ds.getValue(MedBill.class);
-                    if (medBill.getIdBs().equalsIgnoreCase(idBs)) {
+                    if (medBill.getIdBs().equals(idBs)) {
                         if (medBill.getStatus().equals("Hoàn thành")) {
                             medBills.add(medBill);
                         }
@@ -190,7 +218,40 @@ public class Booking extends AppCompatActivity {
         for (int i = 0; i < medBills.size(); i++) {
             rate += medBills.get(i).getRate();
         }
+        if(medBills.size() == 0) {
+            return 5;
+        } else {
+            return rate / (double) (medBills.size());
+        }
+    }
 
-        return rate/(double)(medBills.size());
+    private boolean checkValidTime(String idBs, String time, String date) {
+        data = FirebaseDatabase.getInstance().getReference().child("History");
+        data.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                MedBill medBill = new MedBill();
+                duplicate.clear();
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    medBill = ds.getValue(MedBill.class);
+                    if (medBill.getIdBs().equals(idBs)) {
+                        if (medBill.getTime().equals(time) && medBill.getDate().equals(date)) {
+                            duplicate.add(medBill);
+                        }
+                    }
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        if (duplicate.size() != 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

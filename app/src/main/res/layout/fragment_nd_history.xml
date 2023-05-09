@@ -32,7 +32,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/fill"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -100,11 +100,43 @@
                 android:textSize="16sp" />
 
         </RelativeLayout>
-    </LinearLayout>
+    </LinearLayout>-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/bgr_border"
+        android:orientation="horizontal"
+        tools:layout_marginBottom="4dp">
+
+        <Spinner
+            android:id="@+id/history_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:spinnerMode="dropdown" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/down" />
+
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcLichSuKhamNd"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp" />
+        android:layout_margin="8dp" />
+
 </LinearLayout>

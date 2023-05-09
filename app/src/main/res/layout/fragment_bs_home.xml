@@ -116,7 +116,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Lịch sử khám"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textColor="#000000" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -148,7 +149,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Hồ sơ"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textColor="#000000" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -191,7 +193,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Tủ thuốc"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textColor="#000000" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -222,7 +225,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Thông tin"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textColor="#000000" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

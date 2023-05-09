@@ -82,7 +82,6 @@ public class SignIn extends AppCompatActivity {
                 checkError = false;
             }
             if(checkError) {
-                // for Tester
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
                 Query checkUser = ref.orderByChild("userName").equalTo(userNameInput);
                 checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -109,6 +108,9 @@ public class SignIn extends AppCompatActivity {
                             } else {
                                 Toast.makeText(SignIn.this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
                             }
+                        } else {
+                            //Toast.makeText(SignIn.this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
+                            edUsername.setError("Sai tên đăng nhập");
                         }
                     }
 

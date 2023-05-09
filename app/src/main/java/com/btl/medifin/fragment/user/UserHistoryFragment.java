@@ -15,8 +15,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.btl.medifin.R;
@@ -40,6 +42,7 @@ public class UserHistoryFragment extends Fragment {
     private EditText edFirstDate, edSecondDate;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
     private RecyclerView rcHistory;
+    private Spinner spinner;
     private List<MedBill> medBillList;
 
     public static final String formatTime = "HH:mm";
@@ -65,12 +68,14 @@ public class UserHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nd_history, container, false);
-        edFirstDate = view.findViewById(R.id.edFirstDate);
-        edSecondDate = view.findViewById(R.id.edSecondDate);
+        //edFirstDate = view.findViewById(R.id.edFirstDate);
+        //edSecondDate = view.findViewById(R.id.edSecondDate);
         rcHistory = view.findViewById(R.id.rcLichSuKhamNd);
+        spinner = view.findViewById(R.id.history_mode);
         rcHistory.setLayoutManager(new LinearLayoutManager(getContext()));
+        setSpinner();
         getLichSu(0);
-        edFirstDate.setOnClickListener(v -> {
+        /*edFirstDate.setOnClickListener(v -> {
 
             onDateSetListener = new DatePickerDialog.OnDateSetListener() {
                 @Override
@@ -95,14 +100,25 @@ public class UserHistoryFragment extends Fragment {
                 }
             };
             chooseDate();
-        });
+        });*/
         return view;
+    }
+
+    private void setSpinner() {
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("Đang chờ");
+        arrayList.add("Đang khám");
+        arrayList.add("Hoàn thành");
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        spinner.setGravity(10);
+        spinner.setAdapter(arrayAdapter);
     }
 
     private void getLichSu(int i) {
         if ( i == 0) {
             getHistoryFromDb();
-        } else {
+        } /*else {
             if (edFirstDate.getText().toString().isEmpty() || edSecondDate.getText().toString().isEmpty()) {
                 Toast.makeText(getContext(), "Mốc thời gian bị trống!", Toast.LENGTH_SHORT).show();
             } else if (parseDate(edFirstDate.getText().toString().trim()).after(parseDate(edSecondDate.getText().toString().trim()))) {
@@ -110,7 +126,7 @@ public class UserHistoryFragment extends Fragment {
             } else {
                 getHistoryFromDb();
             }
-        }
+        }*/
     }
 
     private void getHistoryFromDb() {

@@ -1,9 +1,12 @@
 package com.btl.medifin.adapter;
 
+import static java.lang.Math.round;
+
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -64,12 +67,15 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DatLichVie
         private TextView name;
         private TextView specialized;
         private TextView rating;
+        private ProgressBar ratebar;
 
         public DatLichViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tvNameBs_DatLich);
             specialized = itemView.findViewById(R.id.tvSpecializedBs_DatLich);
             rating = itemView.findViewById(R.id.doc_rating);
+            ratebar = itemView.findViewById(R.id.rate_bar);
+
         }
     }
 
@@ -79,15 +85,17 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DatLichVie
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 MedBill medBill = new MedBill();
+                medBills.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     medBill = ds.getValue(MedBill.class);
-                    if (medBill.getIdBs().equalsIgnoreCase(idBs)) {
+                    if (medBill.getIdBs().equals(idBs)) {
                         if (medBill.getStatus().equals("Hoàn thành")) {
                             medBills.add(medBill);
                         }
                     }
                 }
-                holder.rating.setText("Đánh giá: " + calRate(medBills) + "/5.0 sao");
+                holder.rating.setText("(" + String.format("%.2f", calRate(medBills)) + "/5.0)");
+                holder.ratebar.setProgress((int)calRate(medBills) * 20);
             }
 
             @Override
@@ -98,12 +106,17 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DatLichVie
     }
 
     private double calRate(List<MedBill> medBills) {
+
         double rate = 0;
         for (int i = 0; i < medBills.size(); i++) {
             rate += medBills.get(i).getRate();
         }
 
-        return rate/(double)(medBills.size());
+        if (medBills.size() == 0) {
+            return 5;
+        } else {
+            return (rate / (double) (medBills.size()));
+        }
     }
 
 

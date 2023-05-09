@@ -11,13 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.btl.medifin.activity.News;
+import com.btl.medifin.activity.SignIn;
 import com.btl.medifin.activity.UpdateInfor;
 import com.btl.medifin.R;
+import com.btl.medifin.adapter.HospitalAdapter;
+import com.btl.medifin.adapter.SettingAdapter;
+import com.btl.medifin.model.Hospital;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,12 +34,13 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener{
 
     private TextView welcomeName;
     String name;
-    RecyclerView rcvBanner;
-    List<String> urls;
-    Timer timer;
-    TimerTask timerTask;
-    int position;
+    List<Hospital> hospitals;
+
+
+    LinearLayout listBv;
+
     LinearLayoutManager layoutManager;
+    private Context context;
 
 
     public UserHomeFragment() {
@@ -69,7 +77,6 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener{
         view.findViewById(R.id.cv_message_ndHome).setOnClickListener(this);
         view.findViewById(R.id.cv_news_ndHome).setOnClickListener(this);
         view.findViewById(R.id.btnDatLich_ndHome).setOnClickListener(this);
-        rcvBanner = view.findViewById(R.id.rcvBanner);
 
     }
 
@@ -102,6 +109,29 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener{
                 break;
         }
     }
+
+   /* private void setBvelist() {
+        hospitals = new ArrayList<>();
+        Hospital hospital1 = new Hospital();
+        hospital1.setImg(R.raw.bach_mai);
+        hospital1.setName("Bệnh viện Bạch Mai");
+        hospitals.add(hospital1);
+
+        Hospital hospital2 = new Hospital();
+        hospital2.setImg(R.raw.an_cuong);
+        hospital2.setName("Phòng khám An Cường");
+        hospitals.add(hospital2);
+
+    }
+
+    private void setDataAdapter() {
+        HospitalAdapter hospitalAdapter = new HospitalAdapter(context, hospitals);
+        listBv = getView().findViewById(R.id.hospitalList);
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        list
+        listBv.setAdapter(hospitalAdapter);
+    }*/
 
 
 }

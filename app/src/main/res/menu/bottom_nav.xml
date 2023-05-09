@@ -18,6 +18,6 @@
         android:title="Tủ thuốc" />
     <item
         android:id="@+id/menu_setting"
-        android:icon="@drawable/setting"
-        android:title="Cài đặt" />
+        android:icon="@drawable/personal"
+        android:title="Tài khoản" />
 </menu>
