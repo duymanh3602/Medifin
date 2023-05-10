@@ -61,17 +61,14 @@ public class Intro extends AppCompatActivity {
         List<IntroItem> introItems = new ArrayList<>();
 
         IntroItem item1 = new IntroItem();
-        item1.setImageView(R.drawable.intro1);
-        item1.setTextView("Sử dụng APP Đặt hẹn khám BV, " +
-                "người bệnh có thể đăng ký khám tức thời, " +
-                "tiết kiệm thời gian, chủ động trong thời gian cần khám.");
+        item1.setImageView(R.drawable.logo);
+        item1.setTextView("MediFin là ứng dụng đặt lịch khám giúp người bệnh có thể giúp người bệnh giảm thiểu thời gian chờ đợi mỗi lần khám, cung cấp những thông tin cần thiết về bác sĩ và các loại thuốc.");
         IntroItem item2 = new IntroItem();
-        item2.setImageView(R.drawable.intro2);
-        item2.setTextView("Người bệnh nhận được các thông báo nhắc hẹn từ bệnh viện như ngày khám, giờ khám, phòng khám, số thứ tự đăng ký" +
-                "và nhận các thông báo về các chương trình khám chữa bệnh");
+        item2.setImageView(R.drawable.intro1);
+        item2.setTextView("Những bác sĩ với trình độ cao sẽ được MediFin mời về hệ thống để trực tiếp khám cho bệnh nhân một cách tốt nhất.");
         IntroItem item3 = new IntroItem();
-        item3.setImageView(R.drawable.intro3);
-        item3.setTextView("Lưu trữ, tra cứu thông tin các lần khám chữa bệnh");
+        item3.setImageView(R.drawable.intro);
+        item3.setTextView("Lưu trữ, quản lý và tra cứu thông tin các lần khám chữa bệnh");
 
         introItems.add(item1);
         introItems.add(item2);

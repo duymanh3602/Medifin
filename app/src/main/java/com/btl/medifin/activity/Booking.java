@@ -9,10 +9,12 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -27,16 +29,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.security.spec.ECField;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-public class Booking extends AppCompatActivity{
+public class Booking extends AppCompatActivity {
 
     private List<MedBill> medBills = new ArrayList<>();
     private List<MedBill> duplicate = new ArrayList<>();
     private EditText edNgay, edGio;
+    private Spinner timespinner, datespinner;
     //private Button btnTaoPhieu, btnHuy;
     private TimePickerDialog timePickerDialog;
     private TextView btnHuy;
@@ -58,13 +63,15 @@ public class Booking extends AppCompatActivity{
         docAdd = findViewById(R.id.docAddress);
         docInf = findViewById(R.id.docInf);
         rate = findViewById(R.id.innerRating);
+        timespinner = findViewById(R.id.time_spinner);
+        datespinner = findViewById(R.id.date_spinner);
 
         idBs = getIntent().getStringExtra("IDBS");
         tenBs = getIntent().getStringExtra("TENBS");
 
 
         TextView tvTenBs = findViewById(R.id.tvTenBs_datLichNd);
-        tvTenBs.setText("Bác sĩ: "+tenBs);
+        tvTenBs.setText("Bác sĩ: " + tenBs);
 
         prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
         idBn = prefs.getString("USERNAME", "");
@@ -74,10 +81,14 @@ public class Booking extends AppCompatActivity{
 
         getDataBsi(getIntent().getStringExtra("IDBS"));
         getRateBsi(getIntent().getStringExtra("IDBS"));
+        setSpinnerDate();
+        datespinner.setSelection(0);
+        setSpinnerTime(datespinner.getItemAtPosition(0).toString());
 
 
         edNgay.setOnClickListener(v -> {
-            showDateDialog();
+            //showDateDialog();
+            setSpinnerTime(datespinner.getSelectedItem().toString());
         });
         edGio.setOnClickListener(v -> {
             showTimeDialog();
@@ -92,15 +103,15 @@ public class Booking extends AppCompatActivity{
 
     private void taoPhieuKham() {
         Boolean checkError = true;
-        if(edNgay.getText().toString().trim().isEmpty()){
+        if (edNgay.getText().toString().trim().isEmpty()) {
             edNgay.setError("Không được bỏ trống ngày");
             checkError = false;
         }
-        if(edGio.getText().toString().trim().isEmpty()){
+        if (edGio.getText().toString().trim().isEmpty()) {
             edGio.setError("Không được bỏ trống thời gian");
             checkError = false;
         }
-        if(checkError){
+        if (checkError) {
             ref = FirebaseDatabase.getInstance().getReference().child("History");
             MedBill medBill = new MedBill("null", "null", "null", "null", "null", "Đang chờ", "null", "null", "null", "null", 0);
             medBill.setId(ref.push().getKey());
@@ -112,24 +123,6 @@ public class Booking extends AppCompatActivity{
             medBill.setTime(edGio.getText().toString().trim());
             ref.child(medBill.getId()).setValue(medBill);
             finish();
-        }
-    }
-
-    private void setTimePickerInterval(TimePicker timePicker) {
-        int TIME_PICKER_INTERVAL = 15;
-        try {
-
-            NumberPicker minutePicker = (NumberPicker) timePicker.findViewById(Resources.getSystem().getIdentifier(
-                    "minute", "id", "android"));
-            minutePicker.setMinValue(0);
-            minutePicker.setMaxValue((60 / TIME_PICKER_INTERVAL) - 1);
-            List<String> displayedValues = new ArrayList<String>();
-            for (int i = 0; i < 60; i += TIME_PICKER_INTERVAL) {
-                displayedValues.add(String.format("%02d", i));
-            }
-            minutePicker.setDisplayedValues(displayedValues.toArray(new String[0]));
-        } catch (Exception e) {
-            Log.e("TAG", "Exception: " + e);
         }
     }
 
@@ -174,7 +167,7 @@ public class Booking extends AppCompatActivity{
         data.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                docAddress =  dataSnapshot.child("docAdd").getValue(String.class);
+                docAddress = dataSnapshot.child("docAdd").getValue(String.class);
                 docInfo = dataSnapshot.child("docInfo").getValue(String.class);
                 docInf.setText("Thông Tin: " + docInfo);
                 docAdd.setText("Địa Chỉ: " + docAddress);
@@ -194,7 +187,7 @@ public class Booking extends AppCompatActivity{
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 MedBill medBill = new MedBill();
                 medBills.clear();
-                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     medBill = ds.getValue(MedBill.class);
                     if (medBill.getIdBs().equals(idBs)) {
                         if (medBill.getStatus().equals("Hoàn thành")) {
@@ -203,7 +196,7 @@ public class Booking extends AppCompatActivity{
                     }
                 }
                 //calRate(medBills);
-                rate.setText("Đánh giá: " + calRate(medBills) + "/5.0 sao");
+                rate.setText("Đánh giá: " + String.format("%.1f", calRate(medBills)) + "/5.0 sao");
             }
 
             @Override
@@ -218,12 +211,86 @@ public class Booking extends AppCompatActivity{
         for (int i = 0; i < medBills.size(); i++) {
             rate += medBills.get(i).getRate();
         }
-        if(medBills.size() == 0) {
+        if (medBills.size() == 0) {
             return 5;
         } else {
             return rate / (double) (medBills.size());
         }
     }
+
+    private void setSpinnerDate() {
+        ArrayList<String> arrayList = new ArrayList<>();
+
+        String pattern = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        Calendar c = Calendar.getInstance();
+        Date today = new Date();
+        if (c.get(Calendar.HOUR_OF_DAY) >= 17) {
+            c.add(Calendar.DATE, 1);
+            today = c.getTime();
+        }
+
+        String date = simpleDateFormat.format(today);
+        c.setTime(today);
+        c.add(Calendar.DATE, 1);
+        String tomorrow = simpleDateFormat.format(c.getTime());
+        c.add(Calendar.DATE,1);
+        String twomorrow = simpleDateFormat.format(c.getTime());
+
+        arrayList.add(date);
+        arrayList.add(tomorrow);
+        arrayList.add(twomorrow);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        datespinner.setGravity(10);
+        datespinner.setAdapter(arrayAdapter);
+    }
+
+    private void setSpinnerTime(String date) {
+        ArrayList<String> arrayList = new ArrayList<>();
+        Calendar c = Calendar.getInstance();
+        String[] day = date.split("/");
+        Date today = new Date();
+        //check same day
+        if (Integer.parseInt(day[0]) == c.get(Calendar.DATE)) {
+            if (c.get(Calendar.HOUR_OF_DAY) >= 17) {
+                for (int h = 8; h < 18; h++) {
+                    arrayList.add(h + ":00");
+                    arrayList.add(h + ":30");
+                }
+            } else if (c.get(Calendar.HOUR_OF_DAY) >= 8){
+                if (c.get(Calendar.MINUTE) < 30) {
+                    arrayList.add(c.get(Calendar.HOUR_OF_DAY) + ":30");
+                    for (int h = c.get(Calendar.HOUR_OF_DAY) + 1; h < 18; h++) {
+                        arrayList.add(h + ":00");
+                        arrayList.add(h + ":30");
+                    }
+                } else {
+                    for (int h = c.get(Calendar.HOUR_OF_DAY) + 1; h < 18; h++) {
+                        arrayList.add(h + ":00");
+                        arrayList.add(h + ":30");
+                    }
+                }
+            } else {
+                for (int h = 8; h < 18; h++) {
+                    arrayList.add(h + ":00");
+                    arrayList.add(h + ":30");
+                }
+            }
+        } else {
+            for (int h = 8; h < 18; h++) {
+                arrayList.add(h + ":00");
+                arrayList.add(h + ":30");
+            }
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        timespinner.setGravity(10);
+        timespinner.setAdapter(arrayAdapter);
+    }
+
 
     private boolean checkValidTime(String idBs, String time, String date) {
         data = FirebaseDatabase.getInstance().getReference().child("History");
@@ -232,7 +299,7 @@ public class Booking extends AppCompatActivity{
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 MedBill medBill = new MedBill();
                 duplicate.clear();
-                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     medBill = ds.getValue(MedBill.class);
                     if (medBill.getIdBs().equals(idBs)) {
                         if (medBill.getTime().equals(time) && medBill.getDate().equals(date)) {
@@ -242,6 +309,7 @@ public class Booking extends AppCompatActivity{
                 }
 
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

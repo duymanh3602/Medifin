@@ -14,16 +14,17 @@
         android:id="@+id/itemIntro_ivAvatar"
         android:layout_width="260dp"
         android:layout_height="260dp"
-        android:layout_margin="15dp"
+        android:layout_margin="40dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/intro1"
-        />
+        android:src="@drawable/intro1" />
+
     <TextView
         android:id="@+id/itemIntro_tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Sử dụng APP Đặt hẹn khám BV.GĐ người bệnh có thể đăng ký khám tức thời"
-        android:textSize="16sp"
-        android:textColor="@color/purple_500"/>
+        android:textColor="@color/purple_500"
+        android:textSize="16sp" />
 
 </LinearLayout>

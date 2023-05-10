@@ -38,6 +38,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.LichSuVi
         holder.tvTen.setText(obj.getTenBs());
         holder.tvTime.setText(obj.getDate() + " lúc " + obj.getTime());
         holder.tvStatus.setText(obj.getStatus());
+        holder.id.setText(obj.getId());
+        holder.name.setText(obj.getTenBn());
         if(obj.getStatus().equalsIgnoreCase("Đang chờ")){
             holder.tvStatus.setTextColor(context.getResources().getColor(R.color.red));
         }
@@ -61,12 +63,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.LichSuVi
     }
 
     public static class LichSuViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTen, tvTime, tvStatus;
+        private TextView tvTen, tvTime, tvStatus, name, id;
         public LichSuViewHolder(@NonNull View itemView) {
             super(itemView);
             tvStatus = itemView.findViewById(R.id.tvStatus_lichSuKham);
             tvTime = itemView.findViewById(R.id.tv_time_lichSuKham);
             tvTen = itemView.findViewById(R.id.tv_ten_lichSuKham);
+            id = itemView.findViewById(R.id.id_pk);
+            name = itemView.findViewById(R.id.bn_pk);
         }
     }
 }

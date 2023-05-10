@@ -1,25 +1,58 @@
 package com.btl.medifin.fragment.doctor;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.btl.medifin.R;
+import com.btl.medifin.adapter.HistoryAdapter;
+import com.btl.medifin.fragment.user.UserHistoryFragment;
+import com.btl.medifin.model.MedBill;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class DoctorHistoryFragment extends Fragment {
+
+
+    private EditText edFirstDate, edSecondDate;
+    private DatePickerDialog.OnDateSetListener onDateSetListener;
+    private RecyclerView rcHistory;
+    private Spinner spinner;
+    private List<MedBill> medBillList;
+
+    public static final String formatTime = "HH:mm";
+    public static final String formatDate = "dd/MM/yyyy";
+
 
 
     public DoctorHistoryFragment() {
         // Required empty public constructor
     }
 
-
-    public static DoctorHistoryFragment newInstance() {
-        DoctorHistoryFragment fragment = new DoctorHistoryFragment();
+    public static UserHistoryFragment newInstance() {
+        UserHistoryFragment fragment = new UserHistoryFragment();
         return fragment;
     }
 
@@ -31,7 +64,98 @@ public class DoctorHistoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bs_history, container, false);
+        View view = inflater.inflate(R.layout.fragment_bs_history, container, false);
+        //edFirstDate = view.findViewById(R.id.edFirstDate);
+        //edSecondDate = view.findViewById(R.id.edSecondDate);
+        rcHistory = view.findViewById(R.id.rcLichSuKhamDoc);
+        rcHistory.setLayoutManager(new LinearLayoutManager(getContext()));
+        getLichSu(0);
+        /*edFirstDate.setOnClickListener(v -> {
+
+            onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    month = month+1;
+                    String date = dayOfMonth + "/" + month + "/" + year;
+                    edFirstDate.setText(date);
+                    getLichSu(1);
+                }
+            };
+            chooseDate();
+
+        });
+        edSecondDate.setOnClickListener(v -> {
+            onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    month = month+1;
+                    String date = dayOfMonth + "/" + month + "/" + year;
+                    edSecondDate.setText(date);
+                    getLichSu(1);
+                }
+            };
+            chooseDate();
+        });*/
+        return view;
+    }
+
+    private void getLichSu(int i) {
+        if ( i == 0) {
+            getHistoryFromDb();
+        }
+    }
+
+    private void getHistoryFromDb() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("History");
+        databaseReference.orderByChild("date");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    String idNd = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE).getString("USERNAME", "none");
+                    String level = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE).getString("LEVEL", "none");
+                    medBillList = new ArrayList<>();
+                    for(DataSnapshot ds: dataSnapshot.getChildren()){
+//                    && ds.child("status").getValue(String.class).equalsIgnoreCase("Hoàn thành")
+                        if(level.equalsIgnoreCase("Bệnh Nhân")){
+                            if(ds.child("idBn").getValue(String.class).equalsIgnoreCase(idNd) && compareDate(parseDate(ds.child("date").getValue(String.class)))){
+                                MedBill obj = ds.getValue(MedBill.class);
+                                medBillList.add(obj);
+                                //Toast.makeText(getContext(), "found! " + obj.getDate() + " " + obj.getNote(), Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            if(ds.child("idBs").getValue(String.class).equalsIgnoreCase(idNd) && compareDate(parseDate(ds.child("date").getValue(String.class)))){
+                                MedBill obj = ds.getValue(MedBill.class);
+                                medBillList.add(obj);
+                                //Toast.makeText(getContext(), "found! " + obj.getDate() + " " + obj.getNote(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                    HistoryAdapter historyAdapter = new HistoryAdapter(getContext(), medBillList);
+                    rcHistory.setAdapter(historyAdapter);
+                } catch (NullPointerException e){
+                    Log.e("===//", ""+e);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private Boolean compareDate(Date myDate){
+        return true;
+    }
+
+    private Date parseDate(String date){
+        SimpleDateFormat inputParser = new SimpleDateFormat(formatDate);
+        try {
+            return inputParser.parse(date);
+        } catch (ParseException e){
+            return new Date(0);
+        }
     }
 }

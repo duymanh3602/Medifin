@@ -94,7 +94,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DatLichVie
                         }
                     }
                 }
-                holder.rating.setText("(" + String.format("%.2f", calRate(medBills)) + "/5.0)");
+                holder.rating.setText("(" + String.format("%.1f", calRate(medBills)) + "/5.0)");
                 holder.ratebar.setProgress((int)calRate(medBills) * 20);
             }
 

@@ -15,14 +15,13 @@
         android:layout_marginTop="80dp"
         android:layout_marginEnd="32dp"
         android:text="Xin chào !!"
-        android:textColor="#14578C"
+        android:textColor="#20A0D8"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:textStyle="italic" />
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/textView"
@@ -32,21 +31,12 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="128dp"
         android:text="MEDIFIN"
-        android:textColor="#14578C"
+        android:textColor="#20A0D8"
         android:textSize="48sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="#EDEDED"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -72,7 +62,7 @@
         android:text="ĐĂNG NHẬP"
         android:textColor="#EFF3F6"
         android:textSize="20sp"
-        app:backgroundTint="#3F51B5"
+        app:backgroundTint="#20A0D8"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -84,10 +74,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="44dp"
         android:orientation="horizontal"
         android:weightSum="3"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView2"
@@ -159,9 +151,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:gravity="center"
-        android:text="Hoặc đăng nhập bằng phương thức khác"
+        android:text="hoặc đăng nhập bằng phương thức khác"
         android:textColor="#20A0D8"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

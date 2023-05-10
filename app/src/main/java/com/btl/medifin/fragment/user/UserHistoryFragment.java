@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -68,39 +69,31 @@ public class UserHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nd_history, container, false);
-        //edFirstDate = view.findViewById(R.id.edFirstDate);
-        //edSecondDate = view.findViewById(R.id.edSecondDate);
         rcHistory = view.findViewById(R.id.rcLichSuKhamNd);
         spinner = view.findViewById(R.id.history_mode);
         rcHistory.setLayoutManager(new LinearLayoutManager(getContext()));
         setSpinner();
         getLichSu(0);
-        /*edFirstDate.setOnClickListener(v -> {
-
-            onDateSetListener = new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    month = month+1;
-                    String date = dayOfMonth + "/" + month + "/" + year;
-                    edFirstDate.setText(date);
-                    getLichSu(1);
+        spinner.setSelection(3);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String mode = spinner.getSelectedItem().toString();
+                if (mode.equals("Tất cả")) {
+                    getLichSu(0);
+                } else {
+                    filter(mode);
                 }
-            };
-            chooseDate();
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
 
         });
-        edSecondDate.setOnClickListener(v -> {
-            onDateSetListener = new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    month = month+1;
-                    String date = dayOfMonth + "/" + month + "/" + year;
-                    edSecondDate.setText(date);
-                    getLichSu(1);
-                }
-            };
-            chooseDate();
-        });*/
         return view;
     }
 
@@ -109,6 +102,7 @@ public class UserHistoryFragment extends Fragment {
         arrayList.add("Đang chờ");
         arrayList.add("Đang khám");
         arrayList.add("Hoàn thành");
+        arrayList.add("Tất cả");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         spinner.setGravity(10);
@@ -118,15 +112,7 @@ public class UserHistoryFragment extends Fragment {
     private void getLichSu(int i) {
         if ( i == 0) {
             getHistoryFromDb();
-        } /*else {
-            if (edFirstDate.getText().toString().isEmpty() || edSecondDate.getText().toString().isEmpty()) {
-                Toast.makeText(getContext(), "Mốc thời gian bị trống!", Toast.LENGTH_SHORT).show();
-            } else if (parseDate(edFirstDate.getText().toString().trim()).after(parseDate(edSecondDate.getText().toString().trim()))) {
-                Toast.makeText(getContext(), "Thời gian trước phải bé hơn thời gian sau", Toast.LENGTH_SHORT).show();
-            } else {
-                getHistoryFromDb();
-            }
-        }*/
+        }
     }
 
     private void getHistoryFromDb() {
@@ -181,6 +167,44 @@ public class UserHistoryFragment extends Fragment {
         return true;
     }
 
+    private void filter(String option) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("History");
+        databaseReference.orderByChild("date");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    String idNd = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE).getString("USERNAME", "none");
+                    String level = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE).getString("LEVEL", "none");
+                    medBillList = new ArrayList<>();
+                    for(DataSnapshot ds: dataSnapshot.getChildren()){
+                        if(level.equalsIgnoreCase("Bệnh Nhân") && ds.child("status").getValue(String.class).equalsIgnoreCase(option)){
+                            if(ds.child("idBn").getValue(String.class).equalsIgnoreCase(idNd) && compareDate(parseDate(ds.child("date").getValue(String.class)))){
+                                MedBill obj = ds.getValue(MedBill.class);
+                                medBillList.add(obj);
+                            }
+                        } else {
+                            if(ds.child("idBs").getValue(String.class).equalsIgnoreCase(idNd) && compareDate(parseDate(ds.child("date").getValue(String.class)))){
+                                MedBill obj = ds.getValue(MedBill.class);
+                                medBillList.add(obj);
+                            }
+                        }
+                    }
+                    HistoryAdapter historyAdapter = new HistoryAdapter(getContext(), medBillList);
+                    rcHistory.setAdapter(historyAdapter);
+                } catch (NullPointerException e){
+                    Log.e("===//", ""+e);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private Date parseDate(String date){
         SimpleDateFormat inputParser = new SimpleDateFormat(formatDate);
         try {
@@ -188,22 +212,6 @@ public class UserHistoryFragment extends Fragment {
         } catch (ParseException e){
             return new Date(0);
         }
-    }
-
-    private void chooseDate() {
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog dialog = new DatePickerDialog(
-                getActivity(),
-                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                onDateSetListener,
-                year, month, day);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
-
     }
 
 }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.btl.medifin.activity.UpdateInfor;
+import com.btl.medifin.fragment.doctor.DoctorHistoryFragment;
 import com.btl.medifin.fragment.doctor.DoctorHomeFragment;
 import com.btl.medifin.fragment.doctor.DoctorLichKhamFragment;
 import com.btl.medifin.fragment.user.UserBookingFragment;
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     currentFragment = new DoctorHomeFragment();
                     break;
                 case R.id.menu_history:
-                    currentFragment = new UserHistoryFragment();
+                    currentFragment = new DoctorHistoryFragment();
                     break;
                 case R.id.menu_datLich:
                     currentFragment = new DoctorLichKhamFragment();
