@@ -2,6 +2,7 @@ package com.btl.medifin.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,10 +42,18 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.LichSuVi
         holder.id.setText(obj.getId());
         holder.name.setText(obj.getTenBn());
         if(obj.getStatus().equalsIgnoreCase("Đang chờ")){
-            holder.tvStatus.setTextColor(context.getResources().getColor(R.color.red));
+            holder.tvStatus.setTextColor(Color.parseColor("#FBBC05"));
+        }
+
+        if(obj.getStatus().equalsIgnoreCase("Đã bị hủy")){
+            holder.tvStatus.setTextColor(Color.parseColor("#EA4335"));
         }
         if(obj.getStatus().equalsIgnoreCase("Đang khám")){
-            holder.tvStatus.setTextColor(context.getResources().getColor(R.color.yellow));
+            holder.tvStatus.setTextColor(Color.parseColor("#34A853"));
+        }
+
+        if(obj.getStatus().equalsIgnoreCase("Hoàn Thành")){
+            holder.tvStatus.setTextColor(Color.parseColor("#42B5F4"));
         }
 
         holder.itemView.setOnClickListener(v -> {

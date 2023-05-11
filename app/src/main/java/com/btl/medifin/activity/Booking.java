@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -40,10 +42,9 @@ public class Booking extends AppCompatActivity {
 
     private List<MedBill> medBills = new ArrayList<>();
     private List<MedBill> duplicate = new ArrayList<>();
-    private EditText edNgay, edGio;
+    //private EditText edNgay, edGio;
     private Spinner timespinner, datespinner;
-    //private Button btnTaoPhieu, btnHuy;
-    private TimePickerDialog timePickerDialog;
+    //private TimePickerDialog timePickerDialog;
     private TextView btnHuy;
     private MaterialButton btnTaoPhieu;
     private DatabaseReference ref, data;
@@ -56,8 +57,8 @@ public class Booking extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
         getSupportActionBar().hide();
-        edNgay = findViewById(R.id.edNgay_TaoPhieuKham);
-        edGio = findViewById(R.id.edGio_TaoPhieuKham);
+//        edNgay = findViewById(R.id.edNgay_TaoPhieuKham);
+//        edGio = findViewById(R.id.edGio_TaoPhieuKham);
         btnTaoPhieu = findViewById(R.id.btnTaoPhieuKham);
         btnHuy = findViewById(R.id.btnHuyPhieuKham);
         docAdd = findViewById(R.id.docAddress);
@@ -86,13 +87,25 @@ public class Booking extends AppCompatActivity {
         setSpinnerTime(datespinner.getItemAtPosition(0).toString());
 
 
-        edNgay.setOnClickListener(v -> {
-            //showDateDialog();
-            setSpinnerTime(datespinner.getSelectedItem().toString());
+//        edNgay.setOnClickListener(v -> {
+//            //showDateDialog();
+//            setSpinnerTime(datespinner.getSelectedItem().toString());
+//        });
+        datespinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                    setSpinnerTime(datespinner.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
         });
-        edGio.setOnClickListener(v -> {
-            showTimeDialog();
-        });
+//        edGio.setOnClickListener(v -> {
+//            showTimeDialog();
+//        });
         btnHuy.setOnClickListener(v -> {
             finish();
         });
@@ -103,14 +116,7 @@ public class Booking extends AppCompatActivity {
 
     private void taoPhieuKham() {
         Boolean checkError = true;
-        if (edNgay.getText().toString().trim().isEmpty()) {
-            edNgay.setError("Không được bỏ trống ngày");
-            checkError = false;
-        }
-        if (edGio.getText().toString().trim().isEmpty()) {
-            edGio.setError("Không được bỏ trống thời gian");
-            checkError = false;
-        }
+
         if (checkError) {
             ref = FirebaseDatabase.getInstance().getReference().child("History");
             MedBill medBill = new MedBill("null", "null", "null", "null", "null", "Đang chờ", "null", "null", "null", "null", 0);
@@ -119,14 +125,16 @@ public class Booking extends AppCompatActivity {
             medBill.setTenBs(tenBs);
             medBill.setIdBn(idBn);
             medBill.setTenBn(tenBn);
-            medBill.setDate(edNgay.getText().toString().trim());
-            medBill.setTime(edGio.getText().toString().trim());
+            //medBill.setDate(edNgay.getText().toString().trim());
+            //medBill.setTime(edGio.getText().toString().trim());
+            medBill.setDate(datespinner.getSelectedItem().toString());
+            medBill.setTime(timespinner.getSelectedItem().toString());
             ref.child(medBill.getId()).setValue(medBill);
             finish();
         }
     }
 
-    private void showTimeDialog() {
+    /*private void showTimeDialog() {
         Calendar cal = Calendar.getInstance();
         cal.setTimeZone(TimeZone.getTimeZone("GMT+7"));
         int hour = cal.get(Calendar.HOUR_OF_DAY);
@@ -142,9 +150,9 @@ public class Booking extends AppCompatActivity {
         TimePickerDialog tpd = new TimePickerDialog(this, onTimeSetListener, hour, minute, true);
 
         tpd.show();
-    }
+    }*/
 
-    private void showDateDialog() {
+    /*private void showDateDialog() {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
@@ -160,7 +168,7 @@ public class Booking extends AppCompatActivity {
         };
 
         new DatePickerDialog(this, onDateSetListener, year, month, day).show();
-    }
+    }*/
 
     private void getDataBsi(String idBs) {
         data = FirebaseDatabase.getInstance().getReference().child("users").child(idBs);
@@ -251,11 +259,15 @@ public class Booking extends AppCompatActivity {
         ArrayList<String> arrayList = new ArrayList<>();
         Calendar c = Calendar.getInstance();
         String[] day = date.split("/");
+        //System.out.println(Integer.parseInt(day[0]) + " - " + Integer.parseInt(day[1])+ " - " + Integer.parseInt(day[2]));
         Date today = new Date();
         //check same day
         if (Integer.parseInt(day[0]) == c.get(Calendar.DATE)) {
             if (c.get(Calendar.HOUR_OF_DAY) >= 17) {
                 for (int h = 8; h < 18; h++) {
+                    if ( h == 12 || h == 13) {
+                        continue;
+                    }
                     arrayList.add(h + ":00");
                     arrayList.add(h + ":30");
                 }
@@ -263,23 +275,35 @@ public class Booking extends AppCompatActivity {
                 if (c.get(Calendar.MINUTE) < 30) {
                     arrayList.add(c.get(Calendar.HOUR_OF_DAY) + ":30");
                     for (int h = c.get(Calendar.HOUR_OF_DAY) + 1; h < 18; h++) {
+                        if ( h == 12 || h == 13) {
+                            continue;
+                        }
                         arrayList.add(h + ":00");
                         arrayList.add(h + ":30");
                     }
                 } else {
                     for (int h = c.get(Calendar.HOUR_OF_DAY) + 1; h < 18; h++) {
+                        if ( h == 12 || h == 13) {
+                            continue;
+                        }
                         arrayList.add(h + ":00");
                         arrayList.add(h + ":30");
                     }
                 }
             } else {
                 for (int h = 8; h < 18; h++) {
+                    if ( h == 12 || h == 13) {
+                        continue;
+                    }
                     arrayList.add(h + ":00");
                     arrayList.add(h + ":30");
                 }
             }
         } else {
             for (int h = 8; h < 18; h++) {
+                if ( h == 12 || h == 13) {
+                    continue;
+                }
                 arrayList.add(h + ":00");
                 arrayList.add(h + ":30");
             }

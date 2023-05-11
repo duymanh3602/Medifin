@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.btl.medifin.R;
 import com.btl.medifin.model.MedBill;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,9 +31,12 @@ public class DoctorDangKhamFragment extends Fragment {
     private String mParam2;
     private String idPhieuKham;
 
+    private MaterialButton btnHoanThanh;
+    private TextView btnHuy;
+
     private EditText edChanDoan, edChiTiet;
     private TextView tvMaPhieuKham, tvTenBn;
-    private Button btnHoanThanhKham;
+//    private Button btnHoanThanhKham;
 
     private DatabaseReference databaseReference;
 
@@ -66,17 +70,29 @@ public class DoctorDangKhamFragment extends Fragment {
         mapping(view);
         getDataFromDb();
         hoanThanhKham();
+        huyKham();
         return view;
     }
 
     private void hoanThanhKham() {
-        btnHoanThanhKham.setOnClickListener(v -> {
+        btnHoanThanh.setOnClickListener(v -> {
             String benh = edChanDoan.getText().toString().trim();
             String chiTiet = edChiTiet.getText().toString().trim();
             databaseReference = FirebaseDatabase.getInstance().getReference("History").child(idPhieuKham);
             databaseReference.child("benh").setValue(benh);
             databaseReference.child("note").setValue(chiTiet);
             databaseReference.child("status").setValue("Hoàn thành");
+            getContext().getSharedPreferences("BACSI", Context.MODE_PRIVATE).edit().putBoolean("DANGKHAM", false).commit();
+            getFragmentManager().beginTransaction().add(R.id.fragment_container, new DoctorLichKhamFragment()).remove(this).commit();
+        });
+    }
+
+    private void huyKham() {
+        btnHuy.setOnClickListener(v -> {
+            databaseReference = FirebaseDatabase.getInstance().getReference("History").child(idPhieuKham);
+            databaseReference.child("benh").setValue(null);
+            databaseReference.child("note").setValue(null);
+            databaseReference.child("status").setValue("Đã bị hủy");
             getContext().getSharedPreferences("BACSI", Context.MODE_PRIVATE).edit().putBoolean("DANGKHAM", false).commit();
             getFragmentManager().beginTransaction().add(R.id.fragment_container, new DoctorLichKhamFragment()).remove(this).commit();
         });
@@ -109,6 +125,8 @@ public class DoctorDangKhamFragment extends Fragment {
         edChiTiet = view.findViewById(R.id.edChiTiet);
         tvMaPhieuKham = view.findViewById(R.id.tvMaPhieuKham_dangKham);
         tvTenBn = view.findViewById(R.id.tvTenBn_dangKham);
-        btnHoanThanhKham = view.findViewById(R.id.btnHoanThanhKham);
+        //btnHoanThanhKham = view.findViewById(R.id.btnHoanThanhKham);
+        btnHoanThanh = view.findViewById(R.id.btnHoanThanh);
+        btnHuy = view.findViewById(R.id.btnHuyKham);
     }
 }
