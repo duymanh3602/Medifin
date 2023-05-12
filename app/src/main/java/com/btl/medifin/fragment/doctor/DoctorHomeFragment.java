@@ -81,10 +81,15 @@ public class DoctorHomeFragment extends Fragment implements View.OnClickListener
             case R.id.cvProfile_bsHome:
                 getActivity().startActivity(new Intent(getContext(), UpdateInfor.class));
                 break;
-            case R.id.cv_message_bsHome:
+            /*case R.id.cv_message_bsHome:
                 bnv.setSelectedItemId(R.id.menu_medicine);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new UserMedicineFragment()).commit();
+                break;*/
+            case R.id.cv_message_bsHome:
+                bnv.setSelectedItemId(R.id.menu_medicine);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new DoctorWorkFragment()).commit();
                 break;
             case R.id.cv_news_bsHome:
                 getActivity().startActivity(new Intent(getContext(), News.class));

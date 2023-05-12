@@ -41,10 +41,9 @@ import java.util.TimeZone;
 public class Booking extends AppCompatActivity {
 
     private List<MedBill> medBills = new ArrayList<>();
-    private List<MedBill> duplicate = new ArrayList<>();
-    //private EditText edNgay, edGio;
+    private List<MedBill> duplicateList = new ArrayList<>();
+    private ArrayList<String> duplicateTime = new ArrayList<>();
     private Spinner timespinner, datespinner;
-    //private TimePickerDialog timePickerDialog;
     private TextView btnHuy;
     private MaterialButton btnTaoPhieu;
     private DatabaseReference ref, data;
@@ -57,8 +56,6 @@ public class Booking extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
         getSupportActionBar().hide();
-//        edNgay = findViewById(R.id.edNgay_TaoPhieuKham);
-//        edGio = findViewById(R.id.edGio_TaoPhieuKham);
         btnTaoPhieu = findViewById(R.id.btnTaoPhieuKham);
         btnHuy = findViewById(R.id.btnHuyPhieuKham);
         docAdd = findViewById(R.id.docAddress);
@@ -77,35 +74,27 @@ public class Booking extends AppCompatActivity {
         prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
         idBn = prefs.getString("USERNAME", "");
         tenBn = prefs.getString("FULLNAME", "");
-//        docAddress = prefs.getString("ADDRESS", "");
-//        docInfo = prefs.getString("INFO", "");
 
         getDataBsi(getIntent().getStringExtra("IDBS"));
         getRateBsi(getIntent().getStringExtra("IDBS"));
         setSpinnerDate();
         datespinner.setSelection(0);
-        setSpinnerTime(datespinner.getItemAtPosition(0).toString());
+        //setSpinnerTime(datespinner.getItemAtPosition(0).toString());
+        getTimeDuplicate(datespinner.getItemAtPosition(0).toString());
 
-
-//        edNgay.setOnClickListener(v -> {
-//            //showDateDialog();
-//            setSpinnerTime(datespinner.getSelectedItem().toString());
-//        });
         datespinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    setSpinnerTime(datespinner.getSelectedItem().toString());
+                    //setSpinnerTime(datespinner.getSelectedItem().toString());
+                getTimeDuplicate(datespinner.getSelectedItem().toString());
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 // your code here
             }
-
         });
-//        edGio.setOnClickListener(v -> {
-//            showTimeDialog();
-//        });
+
         btnHuy.setOnClickListener(v -> {
             finish();
         });
@@ -125,50 +114,12 @@ public class Booking extends AppCompatActivity {
             medBill.setTenBs(tenBs);
             medBill.setIdBn(idBn);
             medBill.setTenBn(tenBn);
-            //medBill.setDate(edNgay.getText().toString().trim());
-            //medBill.setTime(edGio.getText().toString().trim());
             medBill.setDate(datespinner.getSelectedItem().toString());
             medBill.setTime(timespinner.getSelectedItem().toString());
             ref.child(medBill.getId()).setValue(medBill);
             finish();
         }
     }
-
-    /*private void showTimeDialog() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeZone(TimeZone.getTimeZone("GMT+7"));
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-        int minute = cal.get(Calendar.MINUTE);
-
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String time = hourOfDay + ":" + minute;
-                edGio.setText(time);
-            }
-        };
-        TimePickerDialog tpd = new TimePickerDialog(this, onTimeSetListener, hour, minute, true);
-
-        tpd.show();
-    }*/
-
-    /*private void showDateDialog() {
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month = month + 1;
-                String date = dayOfMonth + "/" + month + "/" + year;
-                edNgay.setText(date);
-            }
-        };
-
-        new DatePickerDialog(this, onDateSetListener, year, month, day).show();
-    }*/
 
     private void getDataBsi(String idBs) {
         data = FirebaseDatabase.getInstance().getReference().child("users").child(idBs);
@@ -203,7 +154,6 @@ public class Booking extends AppCompatActivity {
                         }
                     }
                 }
-                //calRate(medBills);
                 rate.setText("Đánh giá: " + String.format("%.1f", calRate(medBills)) + "/5.0 sao");
             }
 
@@ -255,12 +205,37 @@ public class Booking extends AppCompatActivity {
         datespinner.setAdapter(arrayAdapter);
     }
 
-    private void setSpinnerTime(String date) {
+    private void getTimeDuplicate(String date) {
+        duplicateTime = new ArrayList<>();
+        data = FirebaseDatabase.getInstance().getReference().child("History");
+        data.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                MedBill medBill = new MedBill();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    medBill = ds.getValue(MedBill.class);
+                    if (medBill.getIdBs().equals(getIntent().getStringExtra("IDBS"))) {
+                        if (medBill.getDate().equals(date) && medBill.getStatus().equals("Đang chờ")) {
+                            duplicateTime.add(medBill.getTime().toString());
+                        }
+                    }
+                }
+
+                setSpinnerTime(date, duplicateTime);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void setSpinnerTime(String date, ArrayList<String> time) {
         ArrayList<String> arrayList = new ArrayList<>();
         Calendar c = Calendar.getInstance();
         String[] day = date.split("/");
         //System.out.println(Integer.parseInt(day[0]) + " - " + Integer.parseInt(day[1])+ " - " + Integer.parseInt(day[2]));
-        Date today = new Date();
         //check same day
         if (Integer.parseInt(day[0]) == c.get(Calendar.DATE)) {
             if (c.get(Calendar.HOUR_OF_DAY) >= 17) {
@@ -269,6 +244,9 @@ public class Booking extends AppCompatActivity {
                         continue;
                     }
                     arrayList.add(h + ":00");
+                    if ( h == 11) {
+                        continue;
+                    }
                     arrayList.add(h + ":30");
                 }
             } else if (c.get(Calendar.HOUR_OF_DAY) >= 8){
@@ -279,6 +257,9 @@ public class Booking extends AppCompatActivity {
                             continue;
                         }
                         arrayList.add(h + ":00");
+                        if ( h == 11) {
+                            continue;
+                        }
                         arrayList.add(h + ":30");
                     }
                 } else {
@@ -287,6 +268,9 @@ public class Booking extends AppCompatActivity {
                             continue;
                         }
                         arrayList.add(h + ":00");
+                        if ( h == 11) {
+                            continue;
+                        }
                         arrayList.add(h + ":30");
                     }
                 }
@@ -296,6 +280,9 @@ public class Booking extends AppCompatActivity {
                         continue;
                     }
                     arrayList.add(h + ":00");
+                    if ( h == 11) {
+                        continue;
+                    }
                     arrayList.add(h + ":30");
                 }
             }
@@ -305,45 +292,22 @@ public class Booking extends AppCompatActivity {
                     continue;
                 }
                 arrayList.add(h + ":00");
+                if ( h == 11) {
+                    continue;
+                }
                 arrayList.add(h + ":30");
             }
         }
 
+        // last filter
+        for (int i = 0; i < arrayList.size(); i++) {
+            if (time.contains(arrayList.get(i))) {
+                arrayList.remove(i);
+            }
+        }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         timespinner.setGravity(10);
         timespinner.setAdapter(arrayAdapter);
-    }
-
-
-    private boolean checkValidTime(String idBs, String time, String date) {
-        data = FirebaseDatabase.getInstance().getReference().child("History");
-        data.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                MedBill medBill = new MedBill();
-                duplicate.clear();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    medBill = ds.getValue(MedBill.class);
-                    if (medBill.getIdBs().equals(idBs)) {
-                        if (medBill.getTime().equals(time) && medBill.getDate().equals(date)) {
-                            duplicate.add(medBill);
-                        }
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        if (duplicate.size() != 0) {
-            return false;
-        } else {
-            return true;
-        }
     }
 }

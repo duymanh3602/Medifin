@@ -74,7 +74,7 @@ public class UserHistoryFragment extends Fragment {
         rcHistory.setLayoutManager(new LinearLayoutManager(getContext()));
         setSpinner();
         getLichSu(0);
-        spinner.setSelection(3);
+        spinner.setSelection(4);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -84,8 +84,6 @@ public class UserHistoryFragment extends Fragment {
                 } else {
                     filter(mode);
                 }
-
-
             }
 
             @Override
@@ -102,6 +100,7 @@ public class UserHistoryFragment extends Fragment {
         arrayList.add("Đang chờ");
         arrayList.add("Đang khám");
         arrayList.add("Hoàn thành");
+        arrayList.add("Đã bị hủy");
         arrayList.add("Tất cả");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
@@ -157,13 +156,6 @@ public class UserHistoryFragment extends Fragment {
     }
 
     private Boolean compareDate(Date myDate){
-//        Date beforeDate = parseDate(edFirstDate.getText().toString().trim());
-//        Date afterDate = parseDate(edSecondDate.getText().toString().trim());
-//
-//        if(beforeDate.compareTo(myDate) == 0 || beforeDate.before(myDate) && afterDate.after(myDate) || afterDate.compareTo(myDate) == 0){
-//            return true;
-//        }
-//        else return false;
         return true;
     }
 

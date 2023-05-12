@@ -33,6 +33,7 @@ public class DoctorDangKhamFragment extends Fragment {
 
     private MaterialButton btnHoanThanh;
     private TextView btnHuy;
+    private TextView btnBack;
 
     private EditText edChanDoan, edChiTiet;
     private TextView tvMaPhieuKham, tvTenBn;
@@ -71,6 +72,7 @@ public class DoctorDangKhamFragment extends Fragment {
         getDataFromDb();
         hoanThanhKham();
         huyKham();
+        hoanKham();
         return view;
     }
 
@@ -87,6 +89,16 @@ public class DoctorDangKhamFragment extends Fragment {
         });
     }
 
+    private void hoanKham() {
+        btnBack.setOnClickListener(v -> {
+            databaseReference = FirebaseDatabase.getInstance().getReference("History").child(idPhieuKham);
+            databaseReference.child("benh").setValue(null);
+            databaseReference.child("note").setValue(null);
+            databaseReference.child("status").setValue("Đang chờ");
+            getContext().getSharedPreferences("BACSI", Context.MODE_PRIVATE).edit().putBoolean("DANGKHAM", false).commit();
+            getFragmentManager().beginTransaction().add(R.id.fragment_container, new DoctorLichKhamFragment()).remove(this).commit();
+        });
+    }
     private void huyKham() {
         btnHuy.setOnClickListener(v -> {
             databaseReference = FirebaseDatabase.getInstance().getReference("History").child(idPhieuKham);
@@ -125,8 +137,8 @@ public class DoctorDangKhamFragment extends Fragment {
         edChiTiet = view.findViewById(R.id.edChiTiet);
         tvMaPhieuKham = view.findViewById(R.id.tvMaPhieuKham_dangKham);
         tvTenBn = view.findViewById(R.id.tvTenBn_dangKham);
-        //btnHoanThanhKham = view.findViewById(R.id.btnHoanThanhKham);
         btnHoanThanh = view.findViewById(R.id.btnHoanThanh);
         btnHuy = view.findViewById(R.id.btnHuyKham);
+        btnBack = view.findViewById(R.id.btnBack);
     }
 }

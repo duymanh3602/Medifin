@@ -70,32 +70,6 @@ public class DoctorHistoryFragment extends Fragment {
         rcHistory = view.findViewById(R.id.rcLichSuKhamDoc);
         rcHistory.setLayoutManager(new LinearLayoutManager(getContext()));
         getLichSu(0);
-        /*edFirstDate.setOnClickListener(v -> {
-
-            onDateSetListener = new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    month = month+1;
-                    String date = dayOfMonth + "/" + month + "/" + year;
-                    edFirstDate.setText(date);
-                    getLichSu(1);
-                }
-            };
-            chooseDate();
-
-        });
-        edSecondDate.setOnClickListener(v -> {
-            onDateSetListener = new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    month = month+1;
-                    String date = dayOfMonth + "/" + month + "/" + year;
-                    edSecondDate.setText(date);
-                    getLichSu(1);
-                }
-            };
-            chooseDate();
-        });*/
         return view;
     }
 
