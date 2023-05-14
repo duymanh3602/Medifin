@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.btl.medifin.activity.DoctorWork;
 import com.btl.medifin.activity.News;
 import com.btl.medifin.activity.UpdateInfor;
 import com.btl.medifin.R;
@@ -87,9 +88,8 @@ public class DoctorHomeFragment extends Fragment implements View.OnClickListener
                         .replace(R.id.fragment_container, new UserMedicineFragment()).commit();
                 break;*/
             case R.id.cv_message_bsHome:
-                bnv.setSelectedItemId(R.id.menu_medicine);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new DoctorWorkFragment()).commit();
+                //bnv.setSelectedItemId(R.id.menu_medicine);
+                getActivity().startActivity(new Intent(getContext(), DoctorWork.class));
                 break;
             case R.id.cv_news_bsHome:
                 getActivity().startActivity(new Intent(getContext(), News.class));

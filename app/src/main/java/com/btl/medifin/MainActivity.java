@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         bnv = findViewById(R.id.bottom_nav);
     }
 
-    private void testDbConnect() {
+    /*private void testDbConnect() {
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("medicine");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -142,5 +142,5 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Fail");
             }
         });
-    }
+    }*/
 }

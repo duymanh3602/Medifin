@@ -10,6 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Medifin">
         <activity
+            android:name="com.btl.medifin.activity.DoctorWork"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name="com.btl.medifin.activity.Medicine"
             android:exported="false">
             <meta-data

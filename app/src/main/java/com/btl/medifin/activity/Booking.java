@@ -238,7 +238,7 @@ public class Booking extends AppCompatActivity {
         //System.out.println(Integer.parseInt(day[0]) + " - " + Integer.parseInt(day[1])+ " - " + Integer.parseInt(day[2]));
         //check same day
         if (Integer.parseInt(day[0]) == c.get(Calendar.DATE)) {
-            if (c.get(Calendar.HOUR_OF_DAY) >= 17) {
+            if (c.get(Calendar.HOUR_OF_DAY) >= 18) {
                 for (int h = 8; h < 18; h++) {
                     if ( h == 12 || h == 13) {
                         continue;
