@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private void addViewDoctors() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new DoctorHomeFragment()).commit();
+        bnv.getMenu().getItem(2).setTitle("Lịch Khám");
 
         bnv.setOnNavigationItemSelectedListener(item -> {
             Fragment currentFragment = null;
