@@ -13,6 +13,7 @@ import com.btl.medifin.activity.UpdateInfor;
 import com.btl.medifin.fragment.doctor.DoctorHistoryFragment;
 import com.btl.medifin.fragment.doctor.DoctorHomeFragment;
 import com.btl.medifin.fragment.doctor.DoctorLichKhamFragment;
+import com.btl.medifin.fragment.doctor.DoctorSettingFragment;
 import com.btl.medifin.fragment.user.UserBookingFragment;
 import com.btl.medifin.fragment.user.UserHistoryFragment;
 import com.btl.medifin.fragment.user.UserHomeFragment;
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                     currentFragment = new UserMedicineFragment();
                     break;
                 case R.id.menu_setting:
-                    currentFragment = new UserSettingFragment();
+                    currentFragment = new DoctorSettingFragment();
                     break;
             }
             getSupportFragmentManager().beginTransaction()
