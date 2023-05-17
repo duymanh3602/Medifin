@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class SignUp extends AppCompatActivity {
@@ -27,6 +30,7 @@ public class SignUp extends AppCompatActivity {
     TextView cancel;
     ImageView back;
     EditText etUserName, etPassword, etRePassword, etEmail;
+    private Spinner gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class SignUp extends AppCompatActivity {
         getSupportActionBar().hide();
 
         mappingView();
+        //setupSpinner();
         signUp();
         cancel.setOnClickListener(v -> {
             finish();
@@ -44,6 +49,18 @@ public class SignUp extends AppCompatActivity {
         });
 
     }
+
+//    private void setupSpinner() {
+//        ArrayList<String> arrayList = new ArrayList<>();
+//        arrayList.add("Nam");
+//        arrayList.add("Nữ");
+//        arrayList.add("Không tiết lộ");
+//
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList);
+//        arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+//        gender.setGravity(10);
+//        gender.setAdapter(arrayAdapter);
+//    }
 
     private void signUp() {
         btnDangKi.setOnClickListener(v -> {
@@ -118,5 +135,6 @@ public class SignUp extends AppCompatActivity {
         etPassword = findViewById(R.id.dangKi_etPassword);
         etRePassword = findViewById(R.id.dangKi_etRePassword);
         etEmail = findViewById(R.id.dangKi_etEmail);
+        //gender = findViewById(R.id.gender);
     }
 }

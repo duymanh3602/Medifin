@@ -48,6 +48,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DatLichVie
 
 
             holder.name.setText("Bác sĩ: " + mList.get(position).getFullName());
+            holder.gender.setText("Giới tính: " + mList.get(position).getGender());
             holder.specialized.setText("Chuyên khoa: " + mList.get(position).getSpecialized());
             getRateBsi(mList.get(position).getUserName(), holder);
             holder.itemView.setOnClickListener(v -> {
@@ -68,6 +69,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DatLichVie
         private TextView specialized;
         private TextView rating;
         private ProgressBar ratebar;
+        private TextView gender;
 
         public DatLichViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,7 +77,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DatLichVie
             specialized = itemView.findViewById(R.id.tvSpecializedBs_DatLich);
             rating = itemView.findViewById(R.id.doc_rating);
             ratebar = itemView.findViewById(R.id.rate_bar);
-
+            gender = itemView.findViewById(R.id.gender_bs);
         }
     }
 

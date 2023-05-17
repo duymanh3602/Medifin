@@ -125,6 +125,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="667dp" />-->
 
+    <!--<Spinner
+        android:id="@+id/gender"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/duongvien_goctron"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dangKi_etEmail" />-->
+
     <Button
         android:id="@+id/dangKi_btnDangKi"
         android:layout_width="386dp"

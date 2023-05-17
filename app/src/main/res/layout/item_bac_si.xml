@@ -77,7 +77,7 @@
         app:srcCompat="@drawable/doc_gender" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/gender_bs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"

@@ -1,7 +1,7 @@
 package com.btl.medifin.model;
 
 public class Users {
-    private String userName, fullName, password, email, level, age, birthday, phone, description, specialized, docAdd, docInfo;
+    private String userName, fullName, password, email, level, age, birthday, phone, description, specialized, docAdd, docInfo, gender;
 
     public Users() {
     }
@@ -115,5 +115,21 @@ public class Users {
 
     public void setDoctorInfo(String doctorInfo) {
         this.docInfo = doctorInfo;
+    }
+
+    public void setDocAdd(String docAdd) {
+        this.docAdd = docAdd;
+    }
+
+    public void setDocInfo(String docInfo) {
+        this.docInfo = docInfo;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }
